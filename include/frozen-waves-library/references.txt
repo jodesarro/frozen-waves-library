@@ -1,0 +1,37 @@
+[1] M. Zamboni-Rached, "Stationary optical wave fields with arbitrary
+longitudinal shape by superposing equal frequency Bessel beams:
+Frozen Waves," Optics Express, vol. 12, no. 17, pp. 4001--4006, Aug. 2004, 
+doi: 10.1364/OPEX.12.004001.
+
+[2] M. Zamboni-Rached, E. Recami, and H. E. Hernández-Figueroa, "Theory of
+'frozen waves': modeling the shape of stationary wave fields," Journal of the
+Optical Society of America A, vol. 22, no. 11, pp. 2465–2475, Nov. 2005,
+doi: 10.1364/JOSAA.22.002465.
+
+[3] M. Zamboni-Rached and M. Mojahedi, "Shaping finite-energy diffraction-
+and attenuation-resistant beams through Bessel-Gauss beam superposition,"
+Physical Review A, vol. 92, no. 4, p. 043839, Oct. 2015,
+doi: 10.1103/PhysRevA.92.043839.
+
+[4] M. Zamboni-Rached, "Diffraction-Attenuation resistant beams in
+absorbing media," Optics Express, vol. 14, no. 5, pp. 1804–1809, Mar. 2006,
+doi: 10.1364/OE.14.001804.
+
+[5] L. A. Ambrosio, "Millimeter-structured nondiffracting surface beams,"
+Journal of the Optical Society of America B, vol. 36, no. 3, pp. 638–645,
+Feb. 2019,
+doi: 10.1364/JOSAB.36.000638.
+
+[6] J. O. de Sarro and L. A. Ambrosio, "Surface beams resistant to
+diffraction and attenuation and structured at the millimeter scale,"
+Journal of the Optical Society of America B, vol. 38, no. 3, pp. 677–684,
+Mar. 2021, doi: 10.1364/JOSAB.412756.
+
+[7] A. H. Dorrah et al., "Light sheets for continuous-depth holography and
+three-dimensional volumetric displays," Nature Photonics, vol. 17, pp.
+427–434, Apr. 2023,
+doi: 10.1038/s41566-023-01188-y.
+
+[8] Still needs a official reference, but FW 3D is a superposition of FWs
+with origins displaced in the plane transverse to the propagation
+direction.

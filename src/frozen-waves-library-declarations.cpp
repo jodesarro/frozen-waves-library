@@ -1,0 +1,17 @@
+void fw_A_coefficient(int N, double L, const std::complex<double> *beta, const double *F, int izmax, std::complex<double> *A, bool absorption_resistant);
+void fw2d_A_coefficient_restricted(int P, int N, double L, const std::complex<double> *beta, const double *F, int iymax, int izmax, std::complex<double> *A, bool absorption_resistant);
+void fw3d_A_coefficient_restricted(int S, int P, int N, double L, const std::complex<double> *beta, const double *F, int ixmax, int iymax, int izmax, std::complex<double> *A, bool absorption_resistant);
+double bb_spot_radius(std::complex<double> h, bool asymptotic);
+double bb_penetration_depth(std::complex<double> beta);
+std::complex<double> bb_axicon_angle(std::complex<double> k, std::complex<double> h, bool in_degree);
+double bb_aperture_radius(std::complex<double> beta, std::complex<double> h, double L);
+double bb_aperture_radius_max(std::complex<double> h);
+double bb_aperture_radius_min(std::complex<double> h);
+int fw_N_max(double Q, double L, std::complex<double> k);
+double fw_Q_from_spot_radius_traditional(std::complex<double> k, double spot_radius, bool asymptotic);
+double fw_Q_from_spot_radius_purely_real_h(std::complex<double> k, double spot_radius, bool asymptotic);
+double fw_Q_from_spot_radius_paraxial_h(std::complex<double> k, double spot_radius, bool asymptotic);
+double fw_absorption_resistant_condition(int N, const std::complex<double> *beta);
+void fw_wavenumbers_traditional(int N, double Q, double L, double k0, std::complex<double> nref, std::complex<double> *k, std::complex<double> *beta, std::complex<double> *h);
+void fw_wavenumbers_purely_real_h(int N, double Q, double L, double k0, std::complex<double> nref, std::complex<double> *k, std::complex<double> *beta, std::complex<double> *h);
+void fw_wavenumbers_paraxial_h(int N, double Q, double L, double k0, std::complex<double> nref, std::complex<double> *k, std::complex<double> *beta, std::complex<double> *h);
