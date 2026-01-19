@@ -335,7 +335,7 @@ If you are unfamiliar with FWs, see the works listed in the
 
   - **Description:** Evaluates the $A_{q,p}$ coefficients of a Frozen Wave (FW)
   2D made by $P$ FWs, restricted to the case where all FWs share the same $N$,
-  $Q$ and $L$ (i.e., for $1 \leq p \leq P$, $N_p = N$, $Q_p = Q$, and
+  $Q$ and $P$ (i.e., for $1 \leq p \leq P$, $N_p = N$, $Q_p = Q$, and
   $L_p = L$), resistant or not to a possible absorption due to a medium with
   complex refractive index. See Refs. [[5]](#ref5), [[6]](#ref6) and
   [[7]](#ref7).
@@ -379,7 +379,7 @@ If you are unfamiliar with FWs, see the works listed in the
 
   - **Description:** Evaluates the $A_{q,ps}$ coefficients of a Frozen Wave
   (FW) 3D made by $S \times P$ FWs, restricted to the case where all FWs
-  share the same $N$, $Q$ and $L$ (i.e., for $1 \leq p \leq P$ and
+  share the same $N$, $Q$ and $P$ (i.e., for $1 \leq p \leq P$ and
   $1 \leq s \leq S$, $N_{ps} = N$, $Q_{ps} = Q$, and $L_{ps} = L$), resistant
   or not to a possible absorption due to a medium with complex refractive
   index. See Refs. [[7]](#ref7) and [[8]](#ref8).
