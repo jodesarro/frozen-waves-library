@@ -5,7 +5,7 @@
     File: include/frozen-waves-library/impl/api_impl_.h
     Version: include/frozen-waves-library/version.h
     Author: Jhonas Olivati de Sarro
-    Language standards: C99 and C++98 guard
+    Language standards: C99
     References: include/frozen-waves-library/references.txt
     License: include/frozen-waves-library/license.txt
 
@@ -33,12 +33,6 @@
     #define FROZEN_WAVES_LIBRARY_VISIBILITY_IMPL_ static inline
 #endif
 
-#ifdef __cplusplus
-    #define FROZEN_WAVES_LIBRARY_CPP_IMPL_ extern "C"
-#else
-    #define FROZEN_WAVES_LIBRARY_CPP_IMPL_
-#endif
-
-#define FROZEN_WAVES_LIBRARY_API_IMPL_ FROZEN_WAVES_LIBRARY_VISIBILITY_IMPL_ FROZEN_WAVES_LIBRARY_CPP_IMPL_
+#define FROZEN_WAVES_LIBRARY_API_IMPL_ FROZEN_WAVES_LIBRARY_VISIBILITY_IMPL_
 
 #endif /* FROZEN_WAVES_LIBRARY_API_IMPL_H */
