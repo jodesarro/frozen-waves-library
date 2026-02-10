@@ -1,7 +1,6 @@
 # Frozen Waves Library: A C library providing routines for computing quantities related to Frozen Waves
 
-This project provides a C library
-([compatible with C++](#compatibility-with-c)) designed for the
+This project provides a C library designed for the
 computation of several quantities related to Frozen Waves (FWs).
 If you are unfamiliar with FWs, see the works listed in the
 [References](#references) for an overview.
@@ -423,14 +422,17 @@ If you are unfamiliar with FWs, see the works listed in the
 
 ## How to use
 
-This library is in a header-only style, i.e., there is nothing to build
-(see the section [Compiling the library](#compiling-the-library) if you still
-want to compile it).
-Therefore, you only need to paste all the content of the
-[include](include/) folder inside the include folder of your project (if you
-do not have an include
+This library is in a header-only style, i.e., there is nothing to build.
+If you need a binary, you may follow the instructions in the
+[Compiling the library](#compiling-the-library).
+
+Otherwise, you only need to paste all the content of the
+[include](include/) folder
+inside the include folder of your project (if you do not have an include
 folder in your project, paste the content inside the root folder of your
-project). Finally, just write `#include "frozen-waves-library.h"` at the very
+project).
+
+Finally, just write `#include "frozen-waves-library.h"` at the very
 beginning of your code and you shall be ready to use the functions.
 
 ## Some C details
@@ -442,31 +444,15 @@ standards. Therefore, all the complex variables are handled using the
 Notice that all functions, macros, constants and files whose names contain
 the suffix `_impl_` are internal and are not intended to be used by users.
 
-## Compatibility with C++
-
-This library uses `__cplusplus` compiler guards with `extern "C"` and
-macros to ensure C++ compatibility (C++98 standard at least).
-
-In this sense, when using C++ compilers, the following C functions are
-automatically mapped to their C++ equivalent: `creal(z)`↦`std::real(z)`,
-`cimag(z)`↦`std::imag(z)`, `cabs(z)`↦`std::abs(z)`,
-`cexp(z)`↦`std::exp(z)`, `sin(z)`↦`std::sin(z)`, `cos(z)`↦`std::cos(z)`, and
-`casin(z)`↦`std::asin(z)`; and all the complex values are handled by means of
-the `std::complex<double>` type of the C++ `<complex>` library.
-
 ## Compiling the library
 
 As aforementioned, usually it is not necessary to compile the library.
-However, in any case, the [src](src/) folder contains the files
-[frozen-waves-library-declarations.c](src/frozen-waves-library-declarations.c) and
-[frozen-waves-library-declarations.cpp](src/frozen-waves-library-declarations.cpp), with
-declarations of all functions in respectively C and C++, and the file
-[frozen-waves-library.c](src/frozen-waves-library.c), which is a C wrapper
-([compatible with C++](#compatibility-with-c)) that may be used for
-compilation.
 
-The following are examples of how to compile this library using C and C++
-compilers.
+However, in any case, the [src](src/) folder contains the file
+[frozen-waves-library.c](src/frozen-waves-library.c), which is a C wrapper
+that may be used for compilation.
+
+The following are examples on how to compile this library using C compilers.
 
 <details>
   <summary>
@@ -474,37 +460,17 @@ compilers.
   </summary>
 
   ```bash
-  gcc -shared -o src/frozen-waves-library.dll src/frozen-waves-library.c -Iinclude
+  gcc -shared -Iinclude src/frozen-waves-library.c -o frozen-waves-library.dll -Wl,--out-implib,libfrozen-waves-library.dll.a
   ```
 </details>
 
 <details>
   <summary>
-    <b>Compiling on Windows with MinGW g++</b>
+    <b>Compiling on Linux with gcc</b>
   </summary>
 
   ```bash
-  g++ -shared -o src/frozen-waves-library.dll src/frozen-waves-library.c -Iinclude
-  ```
-</details>
-
-<details>
-  <summary>
-    <b>Compiling on Linux/macOS with gcc</b>
-  </summary>
-
-  ```bash
-  gcc -shared -fPIC -o src/frozen-waves-library.so src/frozen-waves-library.c -Iinclude
-  ```
-</details>
-
-<details>
-  <summary>
-    <b>Compiling on Linux/macOS with g++</b>
-  </summary>
-
-  ```bash
-  g++ -shared -fPIC -o src/frozen-waves-library.so src/frozen-waves-library.c -Iinclude
+  gcc -fPIC -shared -Iinclude src/frozen-waves-library.c -o libfrozen-waves-library.so
   ```
 </details>
 
@@ -515,49 +481,14 @@ compilers.
 
   Compiling this library with MSVC targeting the C language is discouraged
   because MSVC does not support the `double complex` type from the C
-  `<complex.h>` library. However, you may build it in MSVC
-  targeting the C++ language (e.g., using the `/TP` flag).
-
-  ```bash
-  cl /TP src/frozen-waves-library.c
-  ```
+  `<complex.h>` library.
 </details>
 
-## Other programming languages
-
-Once compiled, it is also possible to use this library together with other
-programming languages.
-
-The following is an example on how to load the C compiled library in Python
-using `numpy` and `cffi`.
-
-<details>
-  <summary>
-    <b>Example of usage in Python</b>
-  </summary>
-
-```python
-import numpy as np
-from cffi import FFI
-
-ffi = FFI()
-
-# Read the C functions declarations
-with open("src/frozen-waves-library-declarations.c", "r") as f:
-    ffi.cdef(f.read())
-
-# Import the compiled file
-fwl = ffi.dlopen("src/frozen-waves-library.so") # for Linux/macOS
-# fwl = ffi.dlopen("src/frozen-waves-library.dll") # for Windows
-
-# Use NumPy complex128 to declare k
-k = np.complex128(9.94e6 - 3.18j)
-
-# Call a function of the library and print the result
-Q = fwl.fw_Q_from_spot_radius_traditional(k, 10e-6, 0)
-print("Result: ", Q)
-```
-</details>
+When using a compiled file of the library into C projects,
+you must paste all the content of the
+[include](include/) folder inside the include folder of your project,
+and then write `#define FROZEN_WAVES_LIBRARY_IMPORTS`
+before the `#include "frozen-waves-library.h"`.
 
 ## Change log
 
@@ -587,7 +518,7 @@ is available at
 <a id="ref1"></a>
 [1] M. Zamboni-Rached, "Stationary optical wave fields with arbitrary
 longitudinal shape by superposing equal frequency Bessel beams:
-Frozen Waves," Optics Express, vol. 12, no. 17, pp. 4001--4006, Aug. 2004, 
+Frozen Waves," Optics Express, vol. 12, no. 17, pp. 4001–4006, Aug. 2004, 
 [doi: 10.1364/OPEX.12.004001](https://doi.org/10.1364/OPEX.12.004001).
 
 <a id="ref2"></a>

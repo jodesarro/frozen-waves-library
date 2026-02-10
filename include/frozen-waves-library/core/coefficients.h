@@ -16,17 +16,16 @@
 #ifndef FROZEN_WAVES_LIBRARY_COEFFICIENTS_H
 #define FROZEN_WAVES_LIBRARY_COEFFICIENTS_H
 
-#ifndef FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_
-#define FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_ static inline
-#endif
-
+#include "../impl/api_impl_.h"
 #include <math.h> /* Maths and constants */
 #include <stdbool.h> /* For 'bool' type */
-#include "../impl/cplx_c_cpp_impl_.h"
+#include <complex.h> /* For 'double complex' type */
 
-/* Fallback for M_PI if not defined by <math.h> */
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
+#ifndef FROZEN_WAVES_LIBRARY_IMPORTS
+    /* Fallback for M_PI if not defined by <math.h> */
+    #ifndef M_PI
+    #define M_PI 3.14159265358979323846
+    #endif
 #endif
 
 /*
@@ -57,11 +56,12 @@
     Notice that for purely real refractive indices, the absorption-resistant
     concerns may be ignored.
 */
-FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_
-void fw_A_coefficient(int N, double L, const tpdfcplx_impl_ *beta,
-    const double *F, int izmax, tpdfcplx_impl_ *A,
-    bool absorption_resistant) {
-    
+FROZEN_WAVES_LIBRARY_API_IMPL_
+void fw_A_coefficient(int N, double L, const double complex *beta,
+    const double *F, int izmax, double complex *A,
+    bool absorption_resistant)
+#ifndef FROZEN_WAVES_LIBRARY_IMPORTS
+{
     /* Constants */
     double betabar_0 = absorption_resistant ? cimag(beta[N]) : 0.0;
     double c_2pi_L = 2.0 * M_PI / L;
@@ -72,13 +72,13 @@ void fw_A_coefficient(int N, double L, const tpdfcplx_impl_ *beta,
         double q = (double)(iq - N);
 
         /* Initial trapezoidal contribution (endpoints) */
-        tpdfcplx_impl_ aux = 0.5
+        double complex aux = 0.5
                                 * (F[izmax - 1] * exp(-betabar_0 * L) + F[0]);
 
         /* Sum over intermediate points */
         for (int iz = 1; iz < izmax - 1; iz++) {
             double z = L * (double)iz / (double)(izmax - 1);
-            aux += F[iz] * cexp(I_IMPL_ * c_2pi_L * q * z )
+            aux += F[iz] * cexp(I * c_2pi_L * q * z )
                    * exp(-betabar_0 * z);
         }
 
@@ -86,6 +86,9 @@ void fw_A_coefficient(int N, double L, const tpdfcplx_impl_ *beta,
         A[iq] = aux / (double)(izmax - 1);
     }
 }
+#else
+;
+#endif
 
 /*
     Evaluates the A_q,p coefficients of a Frozen Wave (FW) 2D made by P FWs,
@@ -125,11 +128,12 @@ void fw_A_coefficient(int N, double L, const tpdfcplx_impl_ *beta,
     Notice that for purely real refractive indices, the absorption-resistant
     concerns may be ignored.
 */
-FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_
+FROZEN_WAVES_LIBRARY_API_IMPL_
 void fw2d_A_coefficient_restricted(int P, int N, double L,
-    const tpdfcplx_impl_ *beta, const double *F, int iymax,
-    int izmax, tpdfcplx_impl_ *A, bool absorption_resistant) {
-
+    const double complex *beta, const double *F, int iymax,
+    int izmax, double complex *A, bool absorption_resistant)
+#ifndef FROZEN_WAVES_LIBRARY_IMPORTS
+{
     /* Constants */
     double betabar_0 = absorption_resistant ? cimag(beta[N]) : 0.0;
     double c_2pi_L = 2.0 * M_PI / L;
@@ -147,13 +151,13 @@ void fw2d_A_coefficient_restricted(int P, int N, double L,
                      / (double)(ipmax - 1));
 
             /* Initial trapezoidal contribution (endpoints) */
-            tpdfcplx_impl_ aux = 0.5 * (F[(izmax - 1) + izmax*iy]
+            double complex aux = 0.5 * (F[(izmax - 1) + izmax*iy]
                                  * exp(-betabar_0 * L) + F[0 + izmax*iy]);
 
             /* Sum over intermediate z points */
             for (int iz = 1; iz < izmax - 1; iz++) {
                 double z = L * (double)iz / (double)(izmax - 1);
-                aux += F[iz + izmax*iy] * cexp(I_IMPL_ * c_2pi_L * q * z )
+                aux += F[iz + izmax*iy] * cexp(I * c_2pi_L * q * z )
                        * exp(-betabar_0 * z);
             }
 
@@ -162,6 +166,9 @@ void fw2d_A_coefficient_restricted(int P, int N, double L,
         }
     }
 }
+#else
+;
+#endif
 
 /*
     Evaluates the A_q,sp coefficients of a Frozen Wave (FW) 3D made by SxP
@@ -206,11 +213,12 @@ void fw2d_A_coefficient_restricted(int P, int N, double L,
     Notice that for purely real refractive indices, the absorption-resistant
     concerns may be ignored.
 */
-FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_
+FROZEN_WAVES_LIBRARY_API_IMPL_
 void fw3d_A_coefficient_restricted(int S, int P, int N, double L,
-    const tpdfcplx_impl_ *beta, const double *F, int ixmax,
-    int iymax, int izmax, tpdfcplx_impl_ *A, bool absorption_resistant) {
-    
+    const double complex *beta, const double *F, int ixmax,
+    int iymax, int izmax, double complex *A, bool absorption_resistant)
+#ifndef FROZEN_WAVES_LIBRARY_IMPORTS
+{    
     /* Constants */
     double betabar_0 = absorption_resistant ? cimag(beta[N]) : 0.0;
     double c_2pi_L = 2.0 * M_PI / L;
@@ -231,7 +239,7 @@ void fw3d_A_coefficient_restricted(int S, int P, int N, double L,
                          / (double)(ipmax - 1));
 
                 /* Initial trapezoidal contribution (endpoints in z) */
-                tpdfcplx_impl_ aux = 0.5
+                double complex aux = 0.5
                         * ( F[(izmax - 1) + izmax*iy + izmax*iymax*ix]
                         * exp(-betabar_0 * L)
                         * + F[0 + izmax*iy + izmax*iymax*ix]);
@@ -240,7 +248,7 @@ void fw3d_A_coefficient_restricted(int S, int P, int N, double L,
                 for (int iz = 1; iz < izmax - 1; iz++) {
                     double z = L * (double)iz / (double)(izmax - 1);
                     aux += F[iz + izmax*iy + izmax*iymax*ix]
-                           * cexp(I_IMPL_ * c_2pi_L * q * z)
+                           * cexp(I * c_2pi_L * q * z)
                            * exp(-betabar_0 * z);
                 }
 
@@ -250,5 +258,8 @@ void fw3d_A_coefficient_restricted(int S, int P, int N, double L,
         }
     }
 }
+#else
+;
+#endif
 
 #endif /* FROZEN_WAVES_LIBRARY_COEFFICIENTS_H */

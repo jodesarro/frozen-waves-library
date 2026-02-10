@@ -3,6 +3,17 @@
 Refer to the [References](README.md#references) section of the
 [README.md](README.md) file for a complete list of references.
 
+## v0.1.2 Feb 10, 2026
+- Declaration files deleted.
+- Replaced, in the core headers, `FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_`
+by the `FROZEN_WAVES_LIBRARY_API_IMPL_` macro.
+- Created the file include/frozen-waves-library/impl/api_impl_.h.
+- Added, in the core headers, the macros `FROZEN_WAVES_LIBRARY_IMPORTS` and
+`FROZEN_WAVES_LIBRARY_EXPORTS_IMPL_`, in order to reuse the main header and
+the core headers with compiled files.
+- File src/frozen-waves-library.c adapted to the new compiled conventions.
+- README.me updated.
+
 ## 0.1.1 Jan 19, 2026
 - Library reorganized using specific folders: src, include, core, extern,
 and impl folders.

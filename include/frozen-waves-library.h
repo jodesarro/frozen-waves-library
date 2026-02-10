@@ -28,7 +28,6 @@
 
 #include "frozen-waves-library/version.h"
 #include "frozen-waves-library/core/coefficients.h"
-#include "frozen-waves-library/core/fields.h"
 #include "frozen-waves-library/core/miscellaneous.h"
 #include "frozen-waves-library/core/wavenumbers.h"
 

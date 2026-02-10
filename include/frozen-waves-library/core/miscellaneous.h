@@ -16,32 +16,29 @@
 #ifndef FROZEN_WAVES_LIBRARY_MISCELLANEOUS_H
 #define FROZEN_WAVES_LIBRARY_MISCELLANEOUS_H
 
-#ifndef FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_
-#define FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_ static inline
-#endif
-
-
+#include "../impl/api_impl_.h"
 #include <float.h> /* For DBL_EPSILON */
 #include <math.h> /* For NAN and maths */
 #include <stdbool.h> /* For 'bool' type */
-#include "../impl/cplx_c_cpp_impl_.h"
+#include <complex.h> /* For 'double complex' type */
 
-/* Fallback for M_PI if not defined by <math.h> */
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
+#ifndef FROZEN_WAVES_LIBRARY_IMPORTS
+    /* Fallback for M_PI if not defined by <math.h> */
+    #ifndef M_PI
+    #define M_PI 3.14159265358979323846
+    #endif
+
+    /* Fallback for M_1_PI if not defined by <math.h> */
+    #ifndef M_1_PI
+    #define M_1_PI 0.3183098861837906715377675
+    #endif
+
+    /* First zero of cylindrical Bessel function of the 1st kind and order 0 */
+    #define C_CYLJ_01 2.4048255576957727686216
 #endif
-
-/* Fallback for M_1_PI if not defined by <math.h> */
-#ifndef M_1_PI
-#define M_1_PI 0.3183098861837906715377675
-#endif
-
-/* First zero of cylindrical Bessel function of the 1st kind and order 0 */
-#define C_CYLJ_01 2.4048255576957727686216
 
 /*
-    Returns the spot radius of a Bessel beam (BB) of transverse wavenumber
-    h.
+    Returns the spot radius of a Bessel beam (BB) of transverse wavenumber h.
 
     Parameters:
     - h, transverse wavenumber of the BB.
@@ -54,12 +51,17 @@
     or at least Im(h) <= 2Re(h)/3pi must be satisfied to guarantee finite
     behavior for the Bessel functions.
 */
-FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_
-double bb_spot_radius(tpdfcplx_impl_ h, bool asymptotic) {
+FROZEN_WAVES_LIBRARY_API_IMPL_
+double bb_spot_radius(double complex h, bool asymptotic)
+#ifndef FROZEN_WAVES_LIBRARY_IMPORTS
+{
     double re_h = creal(h);
     double c0 = (asymptotic) ? (0.75 * M_PI) : C_CYLJ_01;
     return c0 / re_h;
 }
+#else
+;
+#endif
 
 /*
     Returns the penetration depth of a Bessel beam (BB) for a given
@@ -71,11 +73,16 @@ double bb_spot_radius(tpdfcplx_impl_ h, bool asymptotic) {
     Implementation: It is computed using the expression 0.5 / alpha, where
     alpha = -Im(beta).
 */
-FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_
-double bb_penetration_depth(tpdfcplx_impl_ beta) {
+FROZEN_WAVES_LIBRARY_API_IMPL_
+double bb_penetration_depth(double complex beta)
+#ifndef FROZEN_WAVES_LIBRARY_IMPORTS
+{
     double alpha = -cimag(beta);
     return 0.5 / alpha;
 }
+#else
+;
+#endif
 
 /*
     Returns the axicon angle theta of a Bessel beam (BB) for a given
@@ -88,16 +95,20 @@ double bb_penetration_depth(tpdfcplx_impl_ beta) {
 
     Implementation: It is computed using the expression theta = arcsin(h/k).
 */
-FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_
-tpdfcplx_impl_ bb_axicon_angle(tpdfcplx_impl_ k, tpdfcplx_impl_ h,
-    bool in_degree) {
-    
-    tpdfcplx_impl_ theta = casin(h / k);
+FROZEN_WAVES_LIBRARY_API_IMPL_
+double complex bb_axicon_angle(double complex k, double complex h,
+    bool in_degree)
+#ifndef FROZEN_WAVES_LIBRARY_IMPORTS    
+{
+    double complex theta = casin(h / k);
     if (in_degree) {
         theta *= (180.0 * M_1_PI); /* 180/pi */
     }
     return theta;
 }
+#else
+;
+#endif
 
 /*
     Returns the aperture radius R for generating a Bessel beam (BB).
@@ -111,18 +122,20 @@ tpdfcplx_impl_ bb_axicon_angle(tpdfcplx_impl_ k, tpdfcplx_impl_ h,
     longitudinal wavenumber, h the transverse wavenumber, and L the
     longitudinal range.
 */
-FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_
-double bb_aperture_radius(tpdfcplx_impl_ beta, tpdfcplx_impl_ h,
-    double L) {
-    
-    tpdfcplx_impl_ c_h_beta = h/beta;
+FROZEN_WAVES_LIBRARY_API_IMPL_
+double bb_aperture_radius(double complex beta, double complex h, double L)
+#ifndef FROZEN_WAVES_LIBRARY_IMPORTS
+{
+    double complex c_h_beta = h/beta;
     if (fabs(cimag(c_h_beta)) < DBL_EPSILON) {
         return L * creal(c_h_beta);
-    }
-    else {
+    } else {
         return NAN;
     }
 }
+#else
+;
+#endif
 
 /*
     Returns R_max, the maximum aperture radius possible for an experimental
@@ -133,11 +146,16 @@ double bb_aperture_radius(tpdfcplx_impl_ beta, tpdfcplx_impl_ h,
 
     Implementation: It is computed using R_max = -0.5/Im(h).
 */
-FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_
-double bb_aperture_radius_max(tpdfcplx_impl_ h) {
+FROZEN_WAVES_LIBRARY_API_IMPL_
+double bb_aperture_radius_max(double complex h)
+#ifndef FROZEN_WAVES_LIBRARY_IMPORTS
+{
     double im_h = cimag(h);
     return -0.5 / im_h;
 }
+#else
+;
+#endif
 
 /*
     Returns R_min, the minimum aperture radius possible for an experimental
@@ -148,12 +166,17 @@ double bb_aperture_radius_max(tpdfcplx_impl_ h) {
 
     Implementation: It is computed using R_min = 3pi/4Re(h).
 */
-FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_
-double bb_aperture_radius_min(tpdfcplx_impl_ h) {
+FROZEN_WAVES_LIBRARY_API_IMPL_
+double bb_aperture_radius_min(double complex h)
+#ifndef FROZEN_WAVES_LIBRARY_IMPORTS
+{
     double re_h = creal(h);
     double c0 = 0.75 * M_PI; /* 3pi/4 */
     return c0 / re_h;
 }
+#else
+;
+#endif
 
 /*
     Returns the maximum value possible for the integer parameter N of a Frozen
@@ -168,9 +191,10 @@ double bb_aperture_radius_min(tpdfcplx_impl_ h) {
     0 <= Re(beta_q) <= Re(k), where beta_q is the longitudinal wavenumber.
 
 */
-FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_
-int fw_N_max(double Q, double L, tpdfcplx_impl_ k) {
-    
+FROZEN_WAVES_LIBRARY_API_IMPL_
+int fw_N_max(double Q, double L, double complex k)
+#ifndef FROZEN_WAVES_LIBRARY_IMPORTS
+{    
     double re_k = creal(k);
 
     /* Minimum between Q and re_k - Q */
@@ -180,6 +204,9 @@ int fw_N_max(double Q, double L, tpdfcplx_impl_ k) {
     double N_max = L * 0.5 * M_1_PI * min_Q_re_k;
     return (int)floor(N_max);
 }
+#else
+;
+#endif
 
 /*
     Returns the parameter Q of the Frozen Wave (FW) technique for a given spot
@@ -198,10 +225,11 @@ int fw_N_max(double Q, double L, tpdfcplx_impl_ k) {
     at least Im(h_q) <= 2Re(h_q)/3pi must be satisfied to avoid the infinite
     behavior of the Bessel functions.
 */
-FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_
-double fw_Q_from_spot_radius_traditional(tpdfcplx_impl_ k,
-    double spot_radius, bool asymptotic) {
-    
+FROZEN_WAVES_LIBRARY_API_IMPL_
+double fw_Q_from_spot_radius_traditional(double complex k,
+    double spot_radius, bool asymptotic)
+#ifndef FROZEN_WAVES_LIBRARY_IMPORTS
+{   
     /* Constants */
     double c0 = (asymptotic) ? (0.75 * M_PI) : C_CYLJ_01;
     double re_k = creal(k);
@@ -210,6 +238,9 @@ double fw_Q_from_spot_radius_traditional(tpdfcplx_impl_ k,
     /* Return Q from spot radius */
     return sqrt(re_k * re_k - c0 * c0 / spot_radius2);
 }
+#else
+;
+#endif
 
 /*
     Returns the parameter Q of the Frozen Wave (FW) technique for a given spot
@@ -226,13 +257,17 @@ double fw_Q_from_spot_radius_traditional(tpdfcplx_impl_ k,
     wavenumbers calculation, where c_0 = 2.4048 in general or c_0 = 3pi / 4
     for asymptotic expansion approximation of the spot radius.
 */
-FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_
-double fw_Q_from_spot_radius_purely_real_h(tpdfcplx_impl_ k,
-    double spot_radius, bool asymptotic) {
-    
+FROZEN_WAVES_LIBRARY_API_IMPL_
+double fw_Q_from_spot_radius_purely_real_h(double complex k,
+    double spot_radius, bool asymptotic)
+#ifndef FROZEN_WAVES_LIBRARY_IMPORTS    
+{
     /* Same case as of the traditional method */
     return fw_Q_from_spot_radius_traditional(k, spot_radius, asymptotic);
 }
+#else
+;
+#endif
 
 /*
     Returns the parameter Q of the Frozen Wave (FW) technique for a given spot
@@ -249,10 +284,11 @@ double fw_Q_from_spot_radius_purely_real_h(tpdfcplx_impl_ k,
     wavenumbers calculation, where c_0 = 2.4048 in general or c_0 = 3pi / 4
     for asymptotic expansion approximation of the spot radius.
 */
-FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_
-double fw_Q_from_spot_radius_paraxial_h(tpdfcplx_impl_ k,
-    double spot_radius, bool asymptotic) {
-
+FROZEN_WAVES_LIBRARY_API_IMPL_
+double fw_Q_from_spot_radius_paraxial_h(double complex k,
+    double spot_radius, bool asymptotic)
+#ifndef FROZEN_WAVES_LIBRARY_IMPORTS    
+{
     /* Constants */
     double c0 = (asymptotic) ? (0.75 * M_PI) : C_CYLJ_01;
     double re_k = creal(k);
@@ -262,6 +298,9 @@ double fw_Q_from_spot_radius_paraxial_h(tpdfcplx_impl_ k,
     /* Return Q from spot radius */
     return re_k * ( 1.0 - 0.5 * c0 * c0 / (spot_radius2 * abs_k2) );
 }
+#else
+;
+#endif
 
 /*
     Returns the Frozen Wave (FW) absorption-resistant condition. See Ref. [4].
@@ -279,12 +318,15 @@ double fw_Q_from_spot_radius_paraxial_h(tpdfcplx_impl_ k,
     Im(beta_q) ~ Im(beta_0) for all q, and so to guarantee the
     absorption-resistant property of the FW.
 */
-FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_
-double fw_absorption_resistant_condition(int N,
-    const tpdfcplx_impl_ *beta) {
-    
+FROZEN_WAVES_LIBRARY_API_IMPL_
+double fw_absorption_resistant_condition(int N, const double complex *beta)
+#ifndef FROZEN_WAVES_LIBRARY_IMPORTS
+{
     int iqmax = 2 * N + 1;
     return (beta[iqmax - 1] - beta[0]) / beta[N];
 }
+#else
+;
+#endif
 
 #endif /* FROZEN_WAVES_LIBRARY_MISCELLANEOUS_H */

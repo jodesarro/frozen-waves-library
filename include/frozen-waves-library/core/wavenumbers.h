@@ -16,21 +16,20 @@
 #ifndef FROZEN_WAVES_LIBRARY_WAVENUMBERS_H
 #define FROZEN_WAVES_LIBRARY_WAVENUMBERS_H
 
-#ifndef FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_
-#define FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_ static inline
-#endif
-
+#include "../impl/api_impl_.h"
 #include <stdbool.h> /* For 'bool' type */
-#include "../impl/cplx_c_cpp_impl_.h"
+#include <complex.h> /* For 'double complex' type */
 
-/* Fallback for M_PI if not defined by <math.h> */
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
+#ifndef FROZEN_WAVES_LIBRARY_IMPORTS
+    /* Fallback for M_PI if not defined by <math.h> */
+    #ifndef M_PI
+    #define M_PI 3.14159265358979323846
+    #endif
 
-/* Fallback for M_SQRT2 if not defined by <math.h> */
-#ifndef M_SQRT2
-#define M_SQRT2 1.41421356237309504880
+    /* Fallback for M_SQRT2 if not defined by <math.h> */
+    #ifndef M_SQRT2
+    #define M_SQRT2 1.41421356237309504880
+    #endif
 #endif
 
 /*
@@ -62,11 +61,12 @@
     Im(n_ref) <= 2Re(n_ref)/3pi must be satisfied in order to avoid the
     infinite behavior of the Bessel functions.
 */
-FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_
+FROZEN_WAVES_LIBRARY_API_IMPL_
 void fw_wavenumbers_traditional(int N, double Q, double L, double k0,
-    tpdfcplx_impl_ nref, tpdfcplx_impl_ *k, tpdfcplx_impl_ *beta,
-    tpdfcplx_impl_ *h) {
-
+    double complex nref, double complex *k, double complex *beta,
+    double complex *h)
+#ifndef FROZEN_WAVES_LIBRARY_IMPORTS
+{
     /* Angular wavenumber */
     *k = nref * k0;
 
@@ -74,7 +74,7 @@ void fw_wavenumbers_traditional(int N, double Q, double L, double k0,
     double c_2pi_L = 2.0 * M_PI / L;
     double re_nref = creal(nref);
     double im_nref = cimag(nref);
-    tpdfcplx_impl_ k2 = (*k) * (*k);
+    double complex k2 = (*k) * (*k);
     int iqmax = 2 * N + 1;
     
     /* Other wavenumbers */
@@ -85,13 +85,16 @@ void fw_wavenumbers_traditional(int N, double Q, double L, double k0,
         /* Longitudinal wavenumber */
         double re_b_q = Q + c_2pi_L * q;
         double im_b_q = re_b_q * im_nref / re_nref;        
-        beta[iq] = re_b_q + I_IMPL_ * im_b_q;
+        beta[iq] = re_b_q + I * im_b_q;
         
         /* Transverse wavenumber */
-        tpdfcplx_impl_ h2 = k2 - beta[iq] * beta[iq];
+        double complex h2 = k2 - beta[iq] * beta[iq];
         h[iq] = csqrt(h2);
     }
 }
+#else
+;
+#endif
 
 /*
     Evaluates the wavenumbers k, beta_q and h_q of a Frozen Wave (FW)
@@ -117,11 +120,12 @@ void fw_wavenumbers_traditional(int N, double Q, double L, double k0,
     In the purely real h_q method, the condition 0 <= Re(beta_q) <= Re(k) must
     be also satisfied in order to ensure Re(beta_q) >= 0 and Im(h_q) = 0.
 */
-FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_
+FROZEN_WAVES_LIBRARY_API_IMPL_
 void fw_wavenumbers_purely_real_h(int N, double Q, double L, double k0,
-    tpdfcplx_impl_ nref, tpdfcplx_impl_ *k, tpdfcplx_impl_ *beta,
-    tpdfcplx_impl_ *h) {
-    
+    double complex nref, double complex *k, double complex *beta,
+    double complex *h)
+#ifndef FROZEN_WAVES_LIBRARY_IMPORTS
+{
     /* Angular wavenumber */
     *k = nref * k0;
     
@@ -142,7 +146,7 @@ void fw_wavenumbers_purely_real_h(int N, double Q, double L, double k0,
         /* Longitudinal wavenumber */
         double re_b_q = Q + c_2pi_L * q;
         double im_b_q = k02 * re_nref * im_nref;
-        beta[iq] = re_b_q + I_IMPL_ * im_b_q;
+        beta[iq] = re_b_q + I * im_b_q;
 
         /* Transverse wavenumber */
         double h2 = (re_nref2 - im_nref2) * k02
@@ -150,6 +154,9 @@ void fw_wavenumbers_purely_real_h(int N, double Q, double L, double k0,
         h[iq] = csqrt(h2);
     }
 }
+#else
+;
+#endif
 
 /*
     Evaluates the wavenumbers k, beta_q and h_q of a Frozen Wave (FW) using
@@ -175,11 +182,12 @@ void fw_wavenumbers_purely_real_h(int N, double Q, double L, double k0,
     Re(beta_q) >= 0 and Im(h_q) = 0 (notice this also implies in purely
     real h_q).
 */
-FROZEN_WAVES_LIBRARY_STATIC_INLINE_IMPL_
+FROZEN_WAVES_LIBRARY_API_IMPL_
 void fw_wavenumbers_paraxial_h(int N, double Q, double L, double k0,
-    tpdfcplx_impl_ nref, tpdfcplx_impl_ *k, tpdfcplx_impl_ *beta,
-    tpdfcplx_impl_ *h) {
-
+    double complex nref, double complex *k, double complex *beta,
+    double complex *h)
+#ifndef FROZEN_WAVES_LIBRARY_IMPORTS
+{
     /* Angular wavenumber */
     *k = nref * k0;
 
@@ -197,11 +205,14 @@ void fw_wavenumbers_paraxial_h(int N, double Q, double L, double k0,
         /* Longitudinal wavenumber */
         double re_b_q = Q + c_2pi_L * q;
         double im_b_q = im_k * (2.0 - re_b_q / re_k);
-        beta[iq] = re_b_q + I_IMPL_ * im_b_q;
+        beta[iq] = re_b_q + I * im_b_q;
         
         /* Transverse wavenumber */
         h[iq] = M_SQRT2 * (*k) * csqrt(1.0 - beta[iq] / (*k));
     }
 }
+#else
+;
+#endif
 
 #endif /* FROZEN_WAVES_LIBRARY_WAVENUMBERS_H */

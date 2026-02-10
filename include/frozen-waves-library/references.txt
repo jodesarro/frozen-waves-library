@@ -1,6 +1,6 @@
 [1] M. Zamboni-Rached, "Stationary optical wave fields with arbitrary
 longitudinal shape by superposing equal frequency Bessel beams:
-Frozen Waves," Optics Express, vol. 12, no. 17, pp. 4001--4006, Aug. 2004, 
+Frozen Waves," Optics Express, vol. 12, no. 17, pp. 4001–4006, Aug. 2004, 
 doi: 10.1364/OPEX.12.004001.
 
 [2] M. Zamboni-Rached, E. Recami, and H. E. Hernández-Figueroa, "Theory of
