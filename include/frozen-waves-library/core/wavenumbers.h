@@ -3,7 +3,6 @@
   related to Frozen Waves
 
   File: include/core/wavenumbers.h
-  Version: include/frozen-waves-library/version.h
   Author: Jhonas Olivati de Sarro
   Language standards: C99
   References: include/frozen-waves-library/references.txt

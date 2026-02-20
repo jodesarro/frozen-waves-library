@@ -3,7 +3,6 @@
   related to Frozen Waves
 
   File: include/frozen-waves-library.h
-  Version: include/frozen-waves-library/version.h
   Author: Jhonas Olivati de Sarro
   Language standards: C99
   References: include/frozen-waves-library/references.txt
@@ -26,6 +25,5 @@
 #include "frozen-waves-library/core/coefficients.h"
 #include "frozen-waves-library/core/miscellaneous.h"
 #include "frozen-waves-library/core/wavenumbers.h"
-#include "frozen-waves-library/version.h"
 
 #endif /* FROZEN_WAVES_LIBRARY_H */
