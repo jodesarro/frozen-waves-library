@@ -3,10 +3,10 @@
   related to Frozen Waves
 
   File: include/core/miscellaneous.h
-  Author: Jhonas Olivati de Sarro
   Language standards: C99
   References: include/frozen-waves-library/references.txt
   License: include/frozen-waves-library/license.txt
+  Repository: <https://github.com/jodesarro/frozen-waves-library>
 
   Description: Callable functions related to Frozen Wave miscellaneous.
 */

@@ -3,10 +3,10 @@
   related to Frozen Waves
 
   File: include/frozen-waves-library/impl/api_impl_.h
-  Author: Jhonas Olivati de Sarro
   Language standards: C99
   References: include/frozen-waves-library/references.txt
   License: include/frozen-waves-library/license.txt
+  Repository: <https://github.com/jodesarro/frozen-waves-library>
 
   Description: Define the API with macros for C++, and for compilation, and for
   header-only or compiled library usage.
