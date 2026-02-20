@@ -490,10 +490,6 @@ you must paste all the content of the
 and then write `#define FROZEN_WAVES_LIBRARY_IMPORTS`
 before the `#include "frozen-waves-library.h"`.
 
-## Change log
-
-Refer to the [CHANGELOG.md](CHANGELOG.md) file for the latest updates.
-
 ## Authorship
 
 The codes and routines were developed and are updated by
