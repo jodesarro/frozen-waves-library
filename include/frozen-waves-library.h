@@ -2,11 +2,10 @@
   Frozen Waves Library: A C library providing routines for computing quantities
   related to Frozen Waves
 
-  File: include/frozen-waves-library.h
-  Language standards: C99
-  References: include/frozen-waves-library/references.txt
-  License: include/frozen-waves-library/license.txt
   Repository: <https://github.com/jodesarro/frozen-waves-library>
+  License: Refer to the LICENSE file in the Repository
+  References: Refer to the README.md file in the Repository
+  Language standard: C99
 
   Description: Include headers of all core functions of the
   include/frozen-waves-library/core folder.

@@ -505,9 +505,7 @@ Electromagnetics Group (AEG)</a> from University of São Paulo (USP).
 
 ## Licensing
 
-This project is protected under [MIT License](LICENSE). A copy of the license
-is available at
-[include/frozen-waves-library/license.txt](include/frozen-waves-library/license.txt).
+This project is protected under [MIT License](LICENSE).
 
 ## References
 
@@ -556,6 +554,3 @@ three-dimensional volumetric displays," Nature Photonics, vol. 17, pp.
 [8] Still needs an official reference, but FW 3D is a superposition of FWs
 with origins displaced in the plane transverse to the propagation
 direction.
-
-A copy of this list is available at
-[include/frozen-waves-library/references.txt](include/frozen-waves-library/references.txt).
