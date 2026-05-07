@@ -26,12 +26,12 @@ SOFTWARE.
 
 ---
 
-Data File Library: A set of C functions for handling numeric data files
-<https://github.com/jodesarro/data-file-library>
+Bessel Library: A C library with routines for computing Bessel functions
+<https://github.com/jodesarro/bessel-library>
 
 MIT License
 
-Copyright (c) 2026 Jhonas Olivati de Sarro
+Copyright (c) 2022 Jhonas Olivati de Sarro
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
