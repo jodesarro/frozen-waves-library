@@ -34,6 +34,7 @@
 #define C_CYLJ_01 2.4048255576957727686216
 #endif
 
+FROZEN_WAVES_LIBRARY_API_IMPL_
 /*
   Returns the spot radius of a Bessel beam (BB) of transverse wavenumber h.
 
@@ -47,7 +48,6 @@
   at least Im(h) <= 2Re(h)/3pi must be satisfied to guarantee finite behavior
   for the Bessel functions.
 */
-FROZEN_WAVES_LIBRARY_API_IMPL_
 double bb_spot_radius(double complex h, bool asymptotic)
 #ifndef FROZEN_WAVES_LIBRARY_IMPORTS
 {
@@ -59,6 +59,7 @@ double bb_spot_radius(double complex h, bool asymptotic)
     ;
 #endif
 
+FROZEN_WAVES_LIBRARY_API_IMPL_
 /*
   Returns the penetration depth of a Bessel beam (BB) for a given longitudinal
   wavenumber beta.
@@ -69,7 +70,6 @@ double bb_spot_radius(double complex h, bool asymptotic)
   Implementation: It is computed using the expression 0.5 / alpha, where alpha =
   -Im(beta).
 */
-FROZEN_WAVES_LIBRARY_API_IMPL_
 double bb_penetration_depth(double complex beta)
 #ifndef FROZEN_WAVES_LIBRARY_IMPORTS
 {
@@ -80,6 +80,7 @@ double bb_penetration_depth(double complex beta)
     ;
 #endif
 
+FROZEN_WAVES_LIBRARY_API_IMPL_
 /*
   Returns the axicon angle theta of a Bessel beam (BB) for a given wavenumber k
   and transverse wavenumber h.
@@ -91,7 +92,6 @@ double bb_penetration_depth(double complex beta)
 
   Implementation: It is computed using the expression theta = arcsin(h/k).
 */
-FROZEN_WAVES_LIBRARY_API_IMPL_
 double complex bb_axicon_angle(double complex k, double complex h,
                                bool in_degree)
 #ifndef FROZEN_WAVES_LIBRARY_IMPORTS
@@ -106,6 +106,7 @@ double complex bb_axicon_angle(double complex k, double complex h,
     ;
 #endif
 
+FROZEN_WAVES_LIBRARY_API_IMPL_
 /*
   Returns the aperture radius R for generating a Bessel beam (BB).
 
@@ -116,9 +117,8 @@ double complex bb_axicon_angle(double complex k, double complex h,
 
   Implementation: It is computed using R = (h/beta)L, where beta is the
   longitudinal wavenumber, h the transverse wavenumber, and L the longitudinal
-  range.
+  range. It returns NAN if the result is not purely real.
 */
-FROZEN_WAVES_LIBRARY_API_IMPL_
 double bb_aperture_radius(double complex beta, double complex h, double L)
 #ifndef FROZEN_WAVES_LIBRARY_IMPORTS
 {
@@ -133,6 +133,7 @@ double bb_aperture_radius(double complex beta, double complex h, double L)
     ;
 #endif
 
+FROZEN_WAVES_LIBRARY_API_IMPL_
 /*
   Returns R_max, the maximum aperture radius possible for an experimental
   generation of a Bessel Beam (BB) of complex transverse wavenumber h.
@@ -142,38 +143,41 @@ double bb_aperture_radius(double complex beta, double complex h, double L)
 
   Implementation: It is computed using R_max = -0.5/Im(h).
 */
-FROZEN_WAVES_LIBRARY_API_IMPL_
 double bb_aperture_radius_max(double complex h)
 #ifndef FROZEN_WAVES_LIBRARY_IMPORTS
 {
   double im_h = cimag(h);
-  return -0.5 / im_h;
+  if (fabs(im_h) < DBL_EPSILON) {
+    return INFINITY;
+  } else {
+    return -0.5 / im_h;
+  }
 }
 #else
     ;
 #endif
 
+FROZEN_WAVES_LIBRARY_API_IMPL_
 /*
   Returns R_min, the minimum aperture radius possible for an experimental
   generation of a Bessel Beam (BB) of complex transverse wavenumber h.
 
   Parameter:
   - h, transverse wavenumber of the BB.
+  - asymptotic, if true, uses the asymptotic approximation.
 
-  Implementation: It is computed using R_min = 3pi/4Re(h).
+  Implementation: Returns bb_spot_radius().
 */
-FROZEN_WAVES_LIBRARY_API_IMPL_
-double bb_aperture_radius_min(double complex h)
+double bb_aperture_radius_min(double complex h, bool asymptotic)
 #ifndef FROZEN_WAVES_LIBRARY_IMPORTS
 {
-  double re_h = creal(h);
-  double c0 = 0.75 * M_PI; /* 3pi/4 */
-  return c0 / re_h;
+  return bb_spot_radius(h, asymptotic);
 }
 #else
     ;
 #endif
 
+FROZEN_WAVES_LIBRARY_API_IMPL_
 /*
   Returns the maximum value possible for the integer parameter N of a Frozen
   Wave (FW). See Refs. [1], [2] and [3].
@@ -183,11 +187,9 @@ double bb_aperture_radius_min(double complex h)
   - L, parameter L of the FW.
   - k, wavenumber.
 
-  Implementation: It is computed by means of the condition 0 <= Re(beta_q) <=
-  Re(k), where beta_q is the longitudinal wavenumber.
-
+  Implementation: It is computed by means of the condition 0 <= Q +/- 2 pi N/L
+  <= Re(k).
 */
-FROZEN_WAVES_LIBRARY_API_IMPL_
 int fw_N_max(double Q, double L, double complex k)
 #ifndef FROZEN_WAVES_LIBRARY_IMPORTS
 {
@@ -204,6 +206,7 @@ int fw_N_max(double Q, double L, double complex k)
     ;
 #endif
 
+FROZEN_WAVES_LIBRARY_API_IMPL_
 /*
   Returns the parameter Q of the Frozen Wave (FW) technique for a given spot
   radius Delta_rho for the FW beam. See Refs. [1] and [2].
@@ -215,12 +218,11 @@ int fw_N_max(double Q, double L, double complex k)
 
   Implementation: It is computed using the expression Q = sqrt(k^2 - c_0^2 /
   Delta_rho^2) of the traditional method for wavenumbers calculation, where c_0
-  = 2.4048 in general or c_0 = 3pi/4 for asymptotic expansion approximation of
-  the spot radius. Notice that for complex transverse wavenumber h_q, Im(h_q) <<
-  Re(h_q), or at least Im(h_q) <= 2Re(h_q)/3pi must be satisfied to avoid the
+  = 2.4048... in general or c_0 = 3pi/4 for asymptotic expansion approximation
+  of the spot radius. Notice that for complex transverse wavenumber h_q, Im(h_q)
+  << Re(h_q), or at least Im(h_q) <= 2Re(h_q)/3pi must be satisfied to avoid the
   infinite behavior of the Bessel functions.
 */
-FROZEN_WAVES_LIBRARY_API_IMPL_
 double fw_Q_from_spot_radius_traditional(double complex k, double spot_radius,
                                          bool asymptotic)
 #ifndef FROZEN_WAVES_LIBRARY_IMPORTS
@@ -237,6 +239,7 @@ double fw_Q_from_spot_radius_traditional(double complex k, double spot_radius,
     ;
 #endif
 
+FROZEN_WAVES_LIBRARY_API_IMPL_
 /*
   Returns the parameter Q of the Frozen Wave (FW) technique for a given spot
   radius Delta_rho for the FW beam, considering purely real transverse
@@ -247,12 +250,8 @@ double fw_Q_from_spot_radius_traditional(double complex k, double spot_radius,
   - spot_radius, FW spot radius.
   - asymptotic, if true, uses the asymptotic approximation.
 
-  Implementation: It is computed using the expression Q = sqrt(k^2 - c_0^2 /
-  Delta_rho^2) of the purely real h_q method for wavenumbers calculation, where
-  c_0 = 2.4048 in general or c_0 = 3pi / 4 for asymptotic expansion
-  approximation of the spot radius.
+  Implementation: Returns fw_Q_from_spot_radius_traditional().
 */
-FROZEN_WAVES_LIBRARY_API_IMPL_
 double fw_Q_from_spot_radius_purely_real_h(double complex k, double spot_radius,
                                            bool asymptotic)
 #ifndef FROZEN_WAVES_LIBRARY_IMPORTS
@@ -264,6 +263,7 @@ double fw_Q_from_spot_radius_purely_real_h(double complex k, double spot_radius,
     ;
 #endif
 
+FROZEN_WAVES_LIBRARY_API_IMPL_
 /*
   Returns the parameter Q of the Frozen Wave (FW) technique for a given spot
   radius Delta_rho for the FW beam, considering the paraxial approximation. See
@@ -279,7 +279,6 @@ double fw_Q_from_spot_radius_purely_real_h(double complex k, double spot_radius,
   calculation, where c_0 = 2.4048 in general or c_0 = 3pi / 4 for asymptotic
   expansion approximation of the spot radius.
 */
-FROZEN_WAVES_LIBRARY_API_IMPL_
 double fw_Q_from_spot_radius_paraxial_h(double complex k, double spot_radius,
                                         bool asymptotic)
 #ifndef FROZEN_WAVES_LIBRARY_IMPORTS
@@ -297,20 +296,21 @@ double fw_Q_from_spot_radius_paraxial_h(double complex k, double spot_radius,
     ;
 #endif
 
+FROZEN_WAVES_LIBRARY_API_IMPL_
 /*
   Returns the Frozen Wave (FW) absorption-resistant condition. See Ref. [4].
 
   Parameters:
-  - `N`, parameter N of the FW.
+  - N, parameter N of the FW.
   - beta, array of size iqmax = 2 * N + 1, containing the longitudinal
-  wavenumber beta_q, where beta_q -> beta[iq] with q -> iq - N, and 0<=iq<iqmax.
+  wavenumber beta_q, where beta_q -> beta[iq] with q -> iq - N, and 0 <= iq <
+  iqmax.
 
   Implementation: It is computed using (Im(beta_N) - Im(beta_-N)) / Im(beta_0),
   where beta_q is the longitudinal wavenumber of the FW. The result must be <<1
   in order to validate the approximation Im(beta_q) ~ Im(beta_0) for all q, and
   so to guarantee the absorption-resistant property of the FW.
 */
-FROZEN_WAVES_LIBRARY_API_IMPL_
 double fw_absorption_resistant_condition(int N, const double complex *beta)
 #ifndef FROZEN_WAVES_LIBRARY_IMPORTS
 {

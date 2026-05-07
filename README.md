@@ -20,7 +20,7 @@ If you are unfamiliar with FWs, see the works listed in the
     - `h`, transverse wavenumber of the BB.
     - `asymptotic`, if true, uses the asymptotic approximation.
   - **Implementation:** It is computed through $c_0/\mathrm{Re}(h)$, where
-    $c_0 = 2.4048$ in general or $c_0 = 3\pi/4$ in the asymptotic
+    $c_0 = 2.4048...$ in general or $c_0 = 3\pi/4$ in the asymptotic
     expansion approximation of the Bessel functions.
     Notice that for complex transverse wavenumber $h$,
     $\mathrm{Im}(h) \ll \mathrm{Re}(h)$,
@@ -69,7 +69,7 @@ If you are unfamiliar with FWs, see the works listed in the
     - `L`, longitudinal range.
   - **Implementation:** It is computed using $R = (h/\beta)L$, where $\beta$
   is the longitudinal wavenumber, $h$ the transverse wavenumber, and $L$ the
-  longitudinal range.
+  longitudinal range. It returns `NAN` if the result is not purely real.
 </details>
 
 <details>
@@ -87,7 +87,7 @@ If you are unfamiliar with FWs, see the works listed in the
 
 <details>
   <summary>
-    <code><b>bb_aperture_radius_min(h)</b></code>
+    <code><b>bb_aperture_radius_min(h, asymptotic)</b></code>
   </summary>
 
   - **Description:** Returns $R_{min}$, the minimum aperture radius possible
@@ -95,7 +95,8 @@ If you are unfamiliar with FWs, see the works listed in the
   wavenumber $h$.
   - **Parameter:**
     - `h`, transverse wavenumber of the BB.
-  - **Implementation:** It is computed using $R_{min} = 3\pi/4\mathrm{Re}(h)$.
+    - `asymptotic`, if true, uses the asymptotic approximation.
+  - **Implementation:** Returns `bb_spot_radius()`.
 </details>
 
 <details>
@@ -111,8 +112,7 @@ If you are unfamiliar with FWs, see the works listed in the
     - `L`, parameter $L$ of the FW.
     - `k`, wavenumber $k$.
   - **Implementation:** It is computed by means of the condition
-  $0 \leq \mathrm{Re}(\beta_q) \leq \mathrm{Re}(k)$, where $\beta_q$ is the
-  longitudinal wavenumber.
+  $0 \leq Q \pm 2\pi N/L \leq \mathrm{Re}(k)$.
 </details>
 
 <details>
@@ -129,7 +129,7 @@ If you are unfamiliar with FWs, see the works listed in the
     - `asymptotic`, if true, uses the asymptotic approximation.
   - **Implementation:** It is computed using the expression
     $Q = \sqrt{(k^2 - c_0^2 / \Delta_\rho^2)}$ of the traditional method for
-    wavenumbers calculation, where $c_0 = 2.4048$ in general or
+    wavenumbers calculation, where $c_0 = 2.4048...$ in general or
     $c_0 = 3\pi / 4$ for asymptotic expansion approximation of the spot radius.
     Notice that for complex transverse wavenumber $h_q$,
     $\mathrm{Im}(h_q) \ll \mathrm{Re}(h_q)$, or at least
@@ -149,10 +149,7 @@ If you are unfamiliar with FWs, see the works listed in the
     - `k`, wavenumber $k$.
     - `spot_radius`, FW spot radius.
     - `asymptotic`, if true, uses the asymptotic approximation.
-  - **Implementation:** It is computed using the expression
-    $Q = \sqrt{(k^2 - c_0^2 / \Delta_\rho^2)}$ of the purely real $h_q$ method
-    for wavenumbers calculation, where $c_0 = 2.4048$ in general or
-    $c_0 = 3\pi /4$ for asymptotic expansion approximation of the spot radius.
+  - **Implementation:** Returns `fw_Q_from_spot_radius_traditional()`.
 </details>
 
 <details>
@@ -185,7 +182,7 @@ If you are unfamiliar with FWs, see the works listed in the
     - `N`, parameter $N$ of the FW.
     - `beta`, array of size `iqmax = 2 * N + 1`, containing the longitudinal
     wavenumber $\beta_q$, where $\beta_q$ ↦ `beta[iq]`, $q$ ↦ `iq - N`, and
-    `0<=iq<iqmax`.
+    `0 <= iq < iqmax`.
   - **Implementation:** It is computed using
     $[\mathrm{Im}(\beta_N) - \mathrm{Im}(\beta_{-N})] / \mathrm{Im}(\beta_0)$,
     where $\beta_q$ is the longitudinal wavenumber of the FW.
@@ -214,10 +211,10 @@ If you are unfamiliar with FWs, see the works listed in the
     - `k`, to output the wavenumber $k$.
     - `beta`, array of size `iqmax = 2 * N + 1` to output the longitudinal
     wavenumber $\beta_q$, where $\beta_q$ ↦ `beta[iq]`, $q$ ↦ `iq - N`, and
-    `0<=iq<iqmax`.
+    `0 <= iq < iqmax`.
     - `h`, array of size `iqmax = 2 * N + 1` to output the transverse
     wavenumber $h_q$, where $h_q$ ↦ `h[iq]`, $q$ ↦ `iq - N`, and
-    `0<=iq<iqmax`.
+    `0 <= iq < iqmax`.
   - **Implementation:** It is computed using the dispersion relationship
     $k^2=h_q^2+\beta_q^2$.
     In the traditional method, it is assumed real axicon angles for the
@@ -251,10 +248,10 @@ If you are unfamiliar with FWs, see the works listed in the
     - `k`, to output the wavenumber $k$.
     - `beta`, array of size `iqmax = 2 * N + 1` to output the longitudinal
     wavenumber $\beta_q$, where $\beta_q$ ↦ `beta[iq]`, $q$ ↦ `iq - N`, and
-    `0<=iq<iqmax`.
+    `0 <= iq < iqmax`.
     - `h`, array of size `iqmax = 2 * N + 1` to output the transverse
     wavenumber $h_q$, where $h_q$ ↦ `h[iq]`, $q$ ↦ `iq - N`, and
-    `0<=iq<iqmax`.
+    `0 <= iq < iqmax`.
   - **Implementation:** It is computed using the dispersion relationship
     $k^2=h_q^2+\beta_q^2$ for purely real $h_q$.
     In the purely real $h_q$ method, the condition
@@ -281,11 +278,13 @@ If you are unfamiliar with FWs, see the works listed in the
     - `k`, to output the wavenumber $k$.
     - `beta`, array of size `iqmax = 2 * N + 1` to output the longitudinal
     wavenumber $\beta_q$, where $\beta_q$ ↦ `beta[iq]`, $q$ ↦ `iq - N`, and
-    `0<=iq<iqmax`.
+    `0 <= iq < iqmax`.
     - `h`, array of size `iqmax = 2 * N + 1` to output the transverse
     wavenumber $h_q$, where $h_q$ ↦ `h[iq]`, $q$ ↦ `iq - N`, and
-    `0<=iq<iqmax`.
-  - **Implementation:** In the paraxial $h_q$ method, the condition
+    `0 <= iq < iqmax`.
+  - **Implementation:** It is computed using the dispersion relationship
+    $h_q=\sqrt(2)*k*\sqrt(1-\beta_q/k)$ (paraxial approximation).
+    In the paraxial $h_q$ method, the condition
     $0 \leq \mathrm{Re}(\beta_q) \leq \mathrm{Re}(k)$ must be also satisfied
     in order to ensure $\mathrm{Re}(\beta_q) \geq 0$ and
     $\mathrm{Im}(h_q) = 0$ (notice this also implies in purely real $h_q$).
@@ -295,129 +294,160 @@ If you are unfamiliar with FWs, see the works listed in the
 
 <details>
   <summary>
-    <code><b>fw_A_coefficient(N, L, beta, F, izmax, A, absorption_resistant)</b></code>
+    <code><b>fw_A(N, L, beta, F, izmax, A, absorption_resistant)</b></code>
   </summary>
 
-  - **Description:** Evaluates the $A_q$ coefficients of a Frozen Wave (FW),
-  resistant or not to a possible absorption due to a medium with complex
-  refractive index. See Refs [[1]](#ref1), [[2]](#ref2), [[3]](#ref3) and
-  [[4]](#ref1).
+  - **Description:** Evaluates the $A_q$ coefficients of a single Frozen Wave
+  (FW), resistant or not to a possible absorption due to a medium with complex refractive index. See Refs. [[1]](#ref1), [[2]](#ref2) and [[3]](#ref3).
   - **Parameters:**
     - `N`, parameter $N$ of the FW.
     - `L`, parameter $L$ of the FW.
     - `beta`, array of size `iqmax = 2 * N + 1` containing the longitudinal
     wavenumber $\beta_q$, where $\beta_q$ ↦ `beta[iq]`, $q$ ↦ `iq - N`, and
-    `0<=iq<iqmax`.
-    - `F`, array of size `izmax` containing the morphological function $F(z)$,
-    where $F(z)$ ↦ `F[iz]`, $z$ ↦ `iz * L / (izmax - 1)`, and
-    `0<=iz<izmax`.
-    - `izmax`, size for the `F[iz]` array, where `0<=iz<izmax`.
+    `0 <= iq < iqmax`.
+    - `F`, array of size `izmax` containing the morphological
+    function $F(z)$, where $F(z)$ ↦ `F[iz]`, and `0 <= iz < izmax`.
+    - `izmax`, size contribution in `iz` for the `F[iz]` array, where `0 <= iz < izmax`.
     - `A`, array of size `iqmax = 2 * N + 1` to output the $A_q$ coefficients,
-    where $A_q$ ↦ `A[iq]`, $q$ ↦ `iq - N`, and `0<=iq<iqmax`.
-    - `absorption_resistant`, if false, the FW is not absorption-resistant.
-  - **Implementation:** The
-  $` A_q = \int_0^L F(z) e^{-\bar{\beta_0}} e^{j 2 \pi q z / L} \mathrm{d}z `$,
-  where $\bar{\beta}_0 = \mathrm{Im}(\beta_0)$ if
-  `absorption_resistant = true` or
-  $\bar{\beta}_0 = 0$ if `absorption_resistant = false`,
-  is computed by means of an approximation of the
-  integral by the trapezoidal method for equally spaced $z$ for a given
-  morphologial function $F(z)$.
-  Notice that for purely real refractive indices, the absorption-resistant
-  concerns may be ignored.
-</details>
-
-<details>
-  <summary>
-    <code><b>fw2d_A_coefficient_restricted(P, N, L, beta, F, ixmax, iymax, izmax, A, absorption_resistant)</b></code>
-  </summary>
-
-  - **Description:** Evaluates the $A_{q,p}$ coefficients of a Frozen Wave (FW)
-  2D made by $P$ FWs, restricted to the case where all FWs share the same $N$,
-  $Q$ and $P$ (i.e., for $1 \leq p \leq P$, $N_p = N$, $Q_p = Q$, and
-  $L_p = L$), resistant or not to a possible absorption due to a medium with
-  complex refractive index. See Refs. [[5]](#ref5), [[6]](#ref6) and
-  [[7]](#ref7).
-  - **Parameters:**
-    - `P`, number $P$ of FWs in the transverse direction $y$.
-    - `N`, parameter $N$ of the FW.
-    - `L`, parameter $L$ of the FW.
-    - `beta`, array of size `iqmax = 2 * N + 1` containing the longitudinal
-    wavenumber $\beta_q$, where $\beta_q$ ↦ `beta[iq]`, $q$ ↦ `iq - N`, and
-    `0<=iq<iqmax`.
-    - `F`, array of size `iymax*izmax` containing the morphological function
-    $F(y,z)$, where $F(y,z)$ ↦ `F[iz + izmax*iy]`,
-    $y$ ↦ `iy`, $z$ ↦ `iz * L / (izmax - 1)`, `0<=iy<iymax`,
-    and `0<=iz<izmax`.
-    - `iymax`, size contribution in `iy` for the `F[iz + izmax*iy]` array,
-    where `0<=iy<iymax`.
-    - `izmax`, size contribution in `iz` for the `F[iz + izmax*iy]` array,
-    where `0<=iz<izmax`.
-    - `A`, array of size `ipmax*iqmax = (P) * (2 * N + 1)` to output
-    the $A_{q,p}$ coefficients, where
-    $A_{q,p}$ ↦ `A[iq + iqmax*ip]`, $p$ ↦ `ip + 1`, $q$ ↦ `iq - N`,
-    `0<=ip<ipmax`, and `0<=iq<iqmax`.
+    where $A_q$ ↦ `A[iq]`, $q$ ↦ `iq - N`, and `0 <= iq < iqmax`.
     - `absorption_resistant`, if false, the FW is not absorption-resistant.
   - **Implementation:**  The
-  $` A_{q,p} = \int_0^L F(y=y_{0p},z) e^{-\bar{\beta_0}} e^{j 2 \pi q z / L} \mathrm{d}z `$,
-  where $y_{0p}$ ↦ `iy * (ipmax - 1) / (iymax - 1)`,
-  $\bar{\beta}_0 = \mathrm{Im}(\beta_0)$ if
-  `absorption_resistant = true` or
-  $\bar{\beta}_0 = 0$ if `absorption_resistant = false`,
-  is computed by means of an approximation of the
-  integral by the trapezoidal method for equally spaced $z$ for a given
-  morphologial function $F(y,z)$.
-  Notice that for purely real refractive indices, the absorption-resistant
-  concerns may be ignored.
+  $` A_q = \int_0^L F(z) e^{-\bar{\beta_0}} e^{i 2 \pi q z / L} \mathrm{d}z `$,
+  where $\bar{\beta_0} = \mathrm{Im}(\beta_0)$ if `absorption_resistant = true` or $\bar{\beta_0} = 0$ if `absorption_resistant = false`,
+  is computed through the function `fw3d_A_restricted()` with `P = S = ixmax = iymax = 1`.
 </details>
 
 <details>
   <summary>
-    <code><b>fw3d_A_coefficient_restricted(S, P, N, L, beta, F, ixmax, iymax, izmax, A, absorption_resistant)</b></code>
+    <code><b>fw3d_A_restricted(P, S, N, L, beta, F, ixmax, iymax, izmax, A, absorption_resistant)</b></code>
   </summary>
 
   - **Description:** Evaluates the $A_{q,ps}$ coefficients of a Frozen Wave
-  (FW) 3D made by $S \times P$ FWs, restricted to the case where all FWs
-  share the same $N$, $Q$ and $P$ (i.e., for $1 \leq p \leq P$ and
+  (FW) 3D made by $P \times S$ FWs, restricted to the case where all FWs
+  share the same $N$, $Q$ and $L$ (i.e., for $1 \leq p \leq P$ and
   $1 \leq s \leq S$, $N_{ps} = N$, $Q_{ps} = Q$, and $L_{ps} = L$), resistant
   or not to a possible absorption due to a medium with complex refractive
   index. See Refs. [[7]](#ref7) and [[8]](#ref8).
   - **Parameters:**
-    - `S`, number $S$ of FWs in the transverse direction $x$.
-    - `P`, number $P$ of FWs in the transverse direction $y$.
+    - `P`, number $P$ of FWs in the transverse direction $x$.
+    - `S`, number $S$ of FWs in the transverse direction $y$.
     - `N`, parameter $N$ of the FW.
     - `L`, parameter $L$ of the FW.
     - `beta`, array of size `iqmax = 2 * N + 1` containing the longitudinal
     wavenumber $\beta_q$, where $\beta_q$ ↦ `beta[iq]`, $q$ ↦ `iq - N`, and
-    `0<=iq<iqmax`.
-    - `F`, array of size `ixmax*iymax*izmax` containing the morphological
+    `0 <= iq < iqmax`.
+    - `F`, array of size `ixmax * iymax * izmax` containing the morphological
     function $F(x,y,z)$,
     where $F(x,y,z)$ ↦ `F[iz + izmax*iy + izmax*iymax*ix]`,
     $x$ ↦ `ix`, $y$ ↦ `iy`, $z$ ↦ `iz * L / (izmax - 1)`,
-    `0<=ix<ixmax`, `0<=iy<iymax`, and `0<=iz<izmax`.
+    `0 <= ix < ixmax`, `0 <= iy < iymax`, and `0 <= iz < izmax`.
     - `ixmax`, size contribution in `ix` for the
-    `F[iz + izmax*iy + izmax*iymax*ix]` array, where `0<=ix<ixmax`.
+    `F[iz + izmax*iy + izmax*iymax*ix]` array, where `0 <= ix < ixmax`.
     - `iymax`, size contribution in `iy` for the
-    `F[iz + izmax*iy + izmax*iymax*ix]` array, where `0<=iy<iymax`.
+    `F[iz + izmax*iy + izmax*iymax*ix]` array, where `0 <= iy < iymax`.
     - `izmax`, size contribution in `iz` for the
-    `F[iz + izmax*iy + izmax*iymax*ix]` array, where `0<=iz<izmax`.
-    - `A`, array of size `ismax*ipmax*iqmax = (S) * (P) * (2 * N + 1)`
-    to output the $A_{q,sp}$ coefficients,
-    where $A_{q,sp}$ ↦ `A[iq + iqmax*ip + iqmax*ipmax*is]`, $s$ ↦ `is + 1`,
-    $p$ ↦ `ip + 1`, $q$ ↦ `iq - N`, `0<=is<ismax`, `0<=ip<ipmax`,
-    and `0<=iq<iqmax`.
+    `F[iz + izmax*iy + izmax*iymax*ix]` array, where `0 <= iz < izmax`.
+    - `A`, array of size `ipmax * ismax * iqmax = P * S * (2 * N + 1)`
+    to output the $A_{q,ps}$ coefficients,
+    where $A_{q,ps}$ ↦ `A[iq + iqmax*is + iqmax*ismax*ip]`, $p$ ↦ `ip + 1`,
+    $s$ ↦ `is + 1`, $q$ ↦ `iq - N`, `0 <= ip < ipmax = P`, `0 <= is < ismax = S`,
+    and `0 <= iq < iqmax = 2 * N + 1`.
     - `absorption_resistant`, if false, the FW is not absorption-resistant.
   - **Implementation:**  The
-  $` A_{q,ps} = \int_0^L F(x=x_{0s}, y=y_{0p}, z) e^{-\bar{\beta_0}} e^{j 2 \pi q z / L} \mathrm{d}z `$,
-  where $x_{0s}$ ↦ `ix * (ismax - 1) / (ixmax - 1)`,
-  $y_{0p}$ ↦ `iy * (ipmax - 1) / (iymax - 1)`,
-  $\bar{\beta_0} = \mathrm{Im}(\beta_0)$ if absorption_resistant = true or
-  $\bar{\beta_0} = 0$ if absorption_resistant = false,
+  $` A_{q,ps} = \int_0^L F(x=x_{0p}, y=y_{0s}, z) e^{-\bar{\beta_0}} e^{i 2 \pi q z / L} \mathrm{d}z `$,
+  where $x_{0p}$ ↦ `ix * (ipmax - 1) / (ixmax - 1)`,
+  $y_{0s}$ ↦ `iy * (ismax - 1) / (iymax - 1)`,
+  $\bar{\beta_0} = \mathrm{Im}(\beta_0)$ if `absorption_resistant = true` or
+  $\bar{\beta_0} = 0$ if `absorption_resistant = false`,
   is computed by means of an approximation of the
   integral by the trapezoidal method for equally spaced $z$ for a given
   morphologial function $F(x,y,z)$.
   Notice that for purely real refractive indices, the absorption-resistant
   concerns may be ignored.
+</details>
+
+### Wave functions
+
+<details>
+  <summary>
+    <code><b>fw_psi(N, beta, h, A, xmin, xmax, xpoints, ymin, ymax, ypoints, zmin, zmax, zpoints, psi)</b></code>
+  </summary>
+
+  - **Description:** Evaluates the scalar wave function $\psi(x,y,z)$ of a single Frozen Wave (FW).
+  See Refs. [[1]](#ref1), [[2]](#ref2) and [[3]](#ref3).
+  - **Parameters:**
+    - `N`, parameter $N$ of the FW.
+    - `L`, parameter $L$ of the FW.
+    - `beta`, array of size `iqmax = 2 * N + 1` containing the longitudinal
+    wavenumber $\beta_q$, where $\beta_q$ ↦ `beta[iq]`, $q$ ↦ `iq - N`, and
+    `0 <= iq < iqmax`.
+    - `h`, array of size `iqmax = 2 * N + 1` containing the transverse
+    wavenumber $h_q$, where $h_q$ ↦ `h[iq]`, $q$ ↦ `iq - N`, and
+    `0 <= iq < iqmax`.
+    - `A`, array of size `iqmax = 2 * N + 1` containing the
+    $A_q$ coefficients, where $A_q$ ↦ `A[iq]`, $q$ ↦ `iq - N`, and `0 <= iq < iqmax`.
+    - `xmin`, minimum value for the $x$ coordinate, where $x \geq$ `xmin`.
+    - `xmax`, maximum value for the $x$ coordinate, where $x \leq$ `xmax`.
+    - `xpoints`, number of points in the $x$ direction, where `0 <= ix < xpoints`.
+    - `ymin`, minimum value for the $y$ coordinate, where $y \geq$ `ymin`.
+    - `ymax`, maximum value for the $y$ coordinate, where $y \leq$ `ymax`.
+    - `ypoints`, number of points in the $y$ direction, where `0 <= iy < ypoints`.
+    - `zmin`, minimum value for the $z$ coordinate, where $z \geq$ `zmin`.
+    - `zmax`, maximum value for the $z$ coordinate, where $z \leq$ `zmax`.
+    - `zpoints`, number of points in the $z$ direction, where `0 <= iz < zpoints`.
+    - `psi`, array of size `xpoints * ypoints * zpoints` to output the scalar wave
+    function $\psi(x,y,z)$, where $\psi(x,y,z)$ ↦ `psi[iz + zpoints*iy + zpoints*ypoints*ix]`, $x$ ↦ `xmin + ix * (xmax - xmin) / (xpoints - 1)`, $y$ ↦ `ymin + iy * (ymax - ymin) / (ypoints - 1)`, $z$ ↦ `zmin + iz * (zmax - zmin) / (zpoints - 1)`.
+  - **Implementation:** The $` \psi(x,y,z) = \sum_{q=-N}^N A_q \ J_0(h_q\sqrt{x^2 + y^2}) \ \exp(-i \beta_q z) `$ is computed through the function `fw3d_psi_restricted()` with `S = P = 1` and
+  `x0[0] = y0[0] = z0[0] = 0`.
+  - **Details:** The computation is parallelized with OpenMP. If the macro `FROZEN_WAVES_LIBRARY_PROGRESS_BAR` is defined, a progress bar is displayed on
+  the console.
+</details>
+
+<details>
+  <summary>
+    <code><b>fw3d_psi_restricted(P, S, N, beta, h, A, x0, y0, z0, xmin, xmax, xpoints, ymin, ymax, ypoints, zmin, zmax, zpoints, psi)</b></code>
+  </summary>
+
+  - **Description:** Evaluates the scalar wave function $\psi(x,y,z)$ of a Frozen Wave (FW) 3D made by
+  $P \times S$ FWs, restricted to the case where all FWs share the same $N$, $Q$ and $L$
+  (i.e., for $1 \leq p \leq P$ and $1 \leq s \leq S$, $N_{ps} = N$, $Q_{ps} = Q$, and $L_{ps} = L$).
+  See Refs. [[7]](#ref7) and [[8]](#ref8).
+  - **Parameters:**
+    - `P`, number $P$ of FWs in the transverse direction $x$.
+    - `S`, number $S$ of FWs in the transverse direction $y$.
+    - `N`, parameter $N$ of the FW.
+    - `L`, parameter $L$ of the FW.
+    - `beta`, array of size `iqmax = 2 * N + 1` containing the longitudinal
+    wavenumber $\beta_q$, where $\beta_q$ ↦ `beta[iq]`, $q$ ↦ `iq - N`, and
+    `0 <= iq < iqmax`.
+    - `h`, array of size `iqmax = 2 * N + 1` containing the transverse
+    wavenumber $h_q$, where $h_q$ ↦ `h[iq]`, $q$ ↦ `iq - N`, and
+    `0 <= iq < iqmax`.
+    - `A`, array of size `ipmax * ismax * iqmax = P * S * (2 * N + 1)` containing the
+    $A_{q,ps}$ coefficients, where $A_{q,ps}$ ↦ `A[iq + iqmax*is + iqmax*ismax*ip]`, $p$ ↦
+    `ip + 1`, $s$ ↦ `is + 1`, $q$ ↦ `iq - N`, `0 <= ip < ipmax = P`, `0 <= is < ismax = S`,
+    and `0 <= iq < iqmax = 2 * N + 1`.
+    - `x0`, array of size `ipmax = P` containing the $x$-coordinates of the origins of
+    the FWs, where $x_{0p}$ ↦ `x0[ip]`, $p$ ↦ `ip + 1`, `0 <= ip < ipmax = P`.
+    - `y0`, array of size `ismax = S` containing the $y$-coordinates of the origins of
+    the FWs, where $y_{0s}$ ↦ `y0[is]`, $s$ ↦ `is + 1`, `0 <= is < ismax = S`.
+    - `z0`, array of size `ipmax * ismax = P * S` containing the $z$-coordinates of the
+    origins of the FWs, where $z_{0ps}$ ↦ `z0[is + ismax*ip]`, $p$ ↦ `ip + 1`, $s$ ↦ `is + 1`, `0 <= ip < ipmax = P`, `0 <= is < ismax = S`.
+    - `xmin`, minimum value for the $x$ coordinate, where $x \geq$ `xmin`.
+    - `xmax`, maximum value for the $x$ coordinate, where $x \leq$ `xmax`.
+    - `xpoints`, number of points in the $x$ direction, where `0 <= ix < xpoints`.
+    - `ymin`, minimum value for the $y$ coordinate, where $y \geq$ `ymin`.
+    - `ymax`, maximum value for the $y$ coordinate, where $y \leq$ `ymax`.
+    - `ypoints`, number of points in the $y$ direction, where `0 <= iy < ypoints`.
+    - `zmin`, minimum value for the $z$ coordinate, where $z \geq$ `zmin`.
+    - `zmax`, maximum value for the $z$ coordinate, where $z \leq$ `zmax`.
+    - `zpoints`, number of points in the $z$ direction, where `0 <= iz < zpoints`.
+    - `psi`, array of size `xpoints * ypoints * zpoints` to output the scalar wave
+    function $\psi(x,y,z)$, where $\psi(x,y,z)$ ↦ `psi[iz + zpoints*iy + zpoints*ypoints*ix]`, $x$ ↦ `xmin + ix * (xmax - xmin) / (xpoints - 1)`, $y$ ↦ `ymin + iy * (ymax - ymin) / (ypoints - 1)`, $z$ ↦ `zmin + iz * (zmax - zmin) / (zpoints - 1)`.
+  - **Implementation:** The scalar wave function is computed through the formula
+  $` \psi(x,y,z) = \sum_{p=1}^P \sum_{s=1}^S \sum_{q=-N}^N A_{q,ps} \ J_0\left[h_q\sqrt{(x-x_{0p})^2 + (y-y_{0s})^2}\right] \ \exp\left[-i \beta_q (z - z_{0ps})\right] `$.
+  - **Details:** The computation is parallelized with OpenMP. If the macro `FROZEN_WAVES_LIBRARY_PROGRESS_BAR` is defined, a progress bar is displayed on
+  the console.
 </details>
 
 ## How to use
@@ -444,6 +474,9 @@ standards. Therefore, all the complex variables are handled using the
 Notice that all functions, macros, constants and files whose names contain
 the suffix `_impl_` are internal and are not intended to be used by users.
 
+The computation of some functions is parallelized with OpenMP. In this sense,
+you need to use the flag `-fopenmp` when compiling your code.
+
 ## Compiling the library
 
 As aforementioned, usually it is not necessary to compile the library.
@@ -460,7 +493,7 @@ The following are examples on how to compile this library using C compilers.
   </summary>
 
   ```bash
-  gcc -shared -Iinclude src/frozen-waves-library.c -o frozen-waves-library.dll -Wl,--out-implib,libfrozen-waves-library.dll.a
+  gcc -fopenmp -shared -Iinclude src/frozen-waves-library.c -o frozen-waves-library.dll -Wl,--out-implib,libfrozen-waves-library.dll.a
   ```
 </details>
 
@@ -470,7 +503,7 @@ The following are examples on how to compile this library using C compilers.
   </summary>
 
   ```bash
-  gcc -fPIC -shared -Iinclude src/frozen-waves-library.c -o libfrozen-waves-library.so
+  gcc -fopenmp -fPIC -shared -Iinclude src/frozen-waves-library.c -o libfrozen-waves-library.so
   ```
 </details>
 
@@ -489,6 +522,23 @@ you must paste all the content of the
 [include](include/) folder inside the include folder of your project,
 and then write `#define FROZEN_WAVES_LIBRARY_IMPORTS`
 before the `#include "frozen-waves-library.h"`.
+
+## Macros
+
+There are some macros that may be used in this library.
+
+- `FROZEN_WAVES_LIBRARY_PROGRESS_BAR`: define this macro to print a progress bar on the console while running the function `fw3d_psi_restricted()`.
+- `FROZEN_WAVES_LIBRARY_IMPORTS`: always and only define this macro when using this library through a compiled file.
+
+All macros must be defined before the inclusion of the header of this library, i.e., you must write `#define FROZEN_WAVES_LIBRARY_PROGRESS_BAR` and/or `#define FROZEN_WAVES_LIBRARY_IMPORTS` before `#include "frozen-waves-library.h"`.
+
+## Third Parties
+
+This library makes use of the following third-party libraries, codes, or routines, already incorporated:
+
+- Bessel Library: A C library with routines for computing Bessel functions. License and more information available at [<https://github.com/jodesarro/bessel-library>](https://github.com/jodesarro/bessel-library).
+
+- Console Progress Bar: A C code for printing the progress of numeric iterations on the console. License and more information available at [<https://github.com/jodesarro/console-progress-bar>](https://github.com/jodesarro/console-progress-bar).
 
 ## Authorship
 

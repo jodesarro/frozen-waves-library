@@ -1,0 +1,131 @@
+/*
+  Bessel Library: A C library with routines for computing Bessel functions
+
+  Repository: <https://github.com/jodesarro/bessel-library>
+  License: Refer to the LICENSE file in the Repository
+  References: Refer to the README.md file in the Repository
+  Language standard: C99
+
+  Description: Computes modified cylindrical Bessel functions of the second
+  kind, real order, and complex argument.
+*/
+
+#ifndef BESSEL_LIBRARY_CYL_K_H
+#define BESSEL_LIBRARY_CYL_K_H
+
+#include "../impl/api_impl_.h"
+#include "../impl/cplx_c_cpp_impl_.h"
+
+#ifndef BESSEL_LIBRARY_IMPORTS
+#include "../impl/cyl_k_full_seq_impl_.h"
+#endif
+
+BESSEL_LIBRARY_API_IMPL_
+/*
+  Returns the modified cylindrical Bessel function of the second kind, real
+  order nu, and complex argument z, i.e., K_nu(z).
+
+  Parameters:
+  - nu, real order of K_nu(z).
+  - z, complex argument of K_nu(z).
+
+  Implementation: Similar to the cyl_k_seq() function.
+*/
+dcomplex cyl_k(double nu, dcomplex z)
+#ifndef BESSEL_LIBRARY_IMPORTS
+{
+  /* Array of one size */
+  dcomplex ck[1];
+
+  /* Compute cyl_k_full_seq_impl_ */
+  cyl_k_full_seq_impl_(nu, 1, z, ck, 0);
+
+  /* Return */
+  return ck[0];
+}
+#else
+    ;
+#endif
+
+BESSEL_LIBRARY_API_IMPL_
+/*
+  Returns the scaled version of the modified cylindrical Bessel function of the
+  second kind, real order nu, and complex argument z, i.e., K_nu(z)*exp(z).
+
+  Parameters:
+  - nu, real order of K_nu(z)*exp(z).
+  - z, complex argument of K_nu(z)*exp(z).
+
+  Implementation: Similar to the cyl_k_seq() function.
+*/
+dcomplex cyl_k_scal(double nu, dcomplex z)
+#ifndef BESSEL_LIBRARY_IMPORTS
+{
+  /* Array of one size */
+  dcomplex ck[1];
+
+  /* Compute cyl_k_full_seq_impl_ */
+  cyl_k_full_seq_impl_(nu, 1, z, ck, 1);
+
+  /* Return */
+  return ck[0];
+}
+#else
+    ;
+#endif
+
+BESSEL_LIBRARY_API_IMPL_
+/*
+  Computes a n-sequency array of modified cylindrical Bessel functions of the
+  second kind, real order nu, and complex argument z, i.e., {K_nu(z),
+  Y_(nu+1)(z), ..., Y_(nu+n-1)(z)}.
+
+  Parameters:
+  - nu, real order of K_nu(z).
+  - n, number n of elements in the sequence for computing the orders nu, nu+1,
+  ..., nu+n-1. It is also the size of the cyl_k_arr array.
+  - z, complex argument of K_nu(z).
+  - cyl_k_arr, array of size n to output K_nu(z) for the orders nu, nu+1, ...,
+  nu+n-1.
+
+  Implementation: In general, the implementation is based on the D. E. Amos
+  Fortran 77 routines from the Slatec library [3]. Such Fortran routines, and
+  all their dependencies, were carefully translated to C. Negative orders are
+  handled by Eqs. (6.5.5) of Ref. [2]. When abs(z)=0, it yields INFINITY if
+  nu=0, or INFINITY + I * INFINITY otherwise.
+*/
+void cyl_k_seq(double nu, int n, dcomplex z, dcomplex *cyl_k_arr)
+#ifndef BESSEL_LIBRARY_IMPORTS
+{
+  cyl_k_full_seq_impl_(nu, n, z, cyl_k_arr, 0);
+}
+#else
+    ;
+#endif
+
+BESSEL_LIBRARY_API_IMPL_
+/*
+  Computes a n-sequency array of scaled versions of modified cylindrical Bessel
+  functions of the second kind, real order nu, and complex argument z, i.e.,
+  {K_nu(z)*exp(z), Y_(nu+1)(z)*exp(z), ..., Y_(nu+n-1)(z)*exp(z)}.
+
+  Parameters:
+  - nu, real order of K_nu(z)*exp(z).
+  - n, number n of elements in the sequence for computing the orders nu, nu+1,
+  ..., nu+n-1. It is also the size of the cyl_k_scaled_arr array.
+  - z, complex argument of K_nu(z)*exp(z).
+  - cyl_k_scaled_arr, array of size n to output K_nu(z)*exp(z) for the orders
+  nu, nu+1, ..., nu+n-1.
+
+  Implementation: Similar to the cyl_k_seq() function.
+*/
+void cyl_k_scal_seq(double nu, int n, dcomplex z, dcomplex *cyl_k_scaled_arr)
+#ifndef BESSEL_LIBRARY_IMPORTS
+{
+  cyl_k_full_seq_impl_(nu, n, z, cyl_k_scaled_arr, 1);
+}
+#else
+    ;
+#endif
+
+#endif /* BESSEL_LIBRARY_CYL_K_H */

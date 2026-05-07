@@ -29,6 +29,7 @@
 #endif
 #endif
 
+FROZEN_WAVES_LIBRARY_API_IMPL_
 /*
   Evaluates the wavenumbers k, beta_q and h_q of a Frozen Wave (FW) using the
   traditional method. See Refs. [1] and [2].
@@ -42,9 +43,9 @@
   - nref, refractive index.
   - k, to output the wavenumber k.
   - beta, array of size iqmax = 2 * N + 1 to output the longitudinal wavenumber
-  beta_q, where beta_q -> beta[iq], q -> iq - N, and 0<=iq<iqmax.
+  beta_q, where beta_q -> beta[iq], q -> iq - N, and 0 <= iq < iqmax.
   - h, array of size iqmax = 2 * N + 1 to output the transverse wavenumber h_q,
-  where h_q -> h[iq], q -> iq - N, and 0<=iq<iqmax.
+  where h_q -> h[iq], q -> iq - N, and 0 <= iq < iqmax.
 
   Implementation: It is computed using the dispersion relationship
   k^2=h_q^2+beta_q^2. In the traditional method, it is assumed real axicon
@@ -55,7 +56,6 @@
   least Im(n_ref) <= 2Re(n_ref)/3pi must be satisfied in order to avoid the
   infinite behavior of the Bessel functions.
 */
-FROZEN_WAVES_LIBRARY_API_IMPL_
 void fw_wavenumbers_traditional(int N, double Q, double L, double k0,
                                 double complex nref, double complex *k,
                                 double complex *beta, double complex *h)
@@ -90,9 +90,11 @@ void fw_wavenumbers_traditional(int N, double Q, double L, double k0,
     ;
 #endif
 
+FROZEN_WAVES_LIBRARY_API_IMPL_
 /*
-  Evaluates the wavenumbers k, beta_q and h_q of a Frozen Wave (FW) considering
-  the purely real transverse wavenumber h_q method. See Ref. [3].
+  Evaluates the wavenumbers k, beta_q and h_q of a Frozen Wave (FW)
+  considering the purely real transverse wavenumber h_q method. See Ref.
+  [3].
 
   Parameters:
   - N, parameter N of the FW.
@@ -102,17 +104,16 @@ void fw_wavenumbers_traditional(int N, double Q, double L, double k0,
   omega_0 is the angular frequency and c the speed of light).
   - nref, refractive index.
   - k, to output the wavenumber k.
-  - beta, array of size iqmax = 2 * N + 1 to output the longitudinal wavenumber
-  beta_q, where beta_q -> beta[iq], q -> iq - N, and 0<=iq<iqmax.
-  - h, array of size iqmax = 2 * N + 1 to output the transverse wavenumber h_q,
-  where h_q -> h[iq], q -> iq - N, and 0<=iq<iqmax.
+  - beta, array of size iqmax = 2 * N + 1 to output the longitudinal
+  wavenumber beta_q, where beta_q -> beta[iq], q -> iq - N, and 0 <= iq < iqmax.
+  - h, array of size iqmax = 2 * N + 1 to output the transverse wavenumber
+  h_q, where h_q -> h[iq], q -> iq - N, and 0 <= iq < iqmax.
 
   Implementation: It is computed using the dispersion relationship
   k^2=h_q^2+beta_q^2 for purely real h_q. In the purely real h_q method, the
-  condition 0 <= Re(beta_q) <= Re(k) must be also satisfied in order to ensure
-  Re(beta_q) >= 0 and Im(h_q) = 0.
+  condition 0 <= Re(beta_q) <= Re(k) must be also satisfied in order to
+  ensure Re(beta_q) >= 0 and Im(h_q) = 0.
 */
-FROZEN_WAVES_LIBRARY_API_IMPL_
 void fw_wavenumbers_purely_real_h(int N, double Q, double L, double k0,
                                   double complex nref, double complex *k,
                                   double complex *beta, double complex *h)
@@ -149,9 +150,11 @@ void fw_wavenumbers_purely_real_h(int N, double Q, double L, double k0,
     ;
 #endif
 
+FROZEN_WAVES_LIBRARY_API_IMPL_
 /*
-  Evaluates the wavenumbers k, beta_q and h_q of a Frozen Wave (FW) using the
-  paraxial approximation for the transverse wavenumber h_q. See Ref. [3].
+  Evaluates the wavenumbers k, beta_q and h_q of a Frozen Wave (FW) using
+  the paraxial approximation for the transverse wavenumber h_q. See Ref.
+  [3].
 
   Parameters:
   - N, parameter N of the FW.
@@ -161,16 +164,17 @@ void fw_wavenumbers_purely_real_h(int N, double Q, double L, double k0,
   omega_0 is the angular frequency and c the speed of light).
   - nref, refractive index.
   - k, to output the wavenumber k.
-  - beta, array of size iqmax = 2 * N + 1 to output the longitudinal wavenumber
-  beta_q, where beta_q -> beta[iq], q -> iq - N, and 0<=iq<iqmax.
-  - h, array of size iqmax = 2 * N + 1 to output the transverse wavenumber h_q,
-  where h_q -> h[iq], q -> iq - N, and 0<=iq<iqmax.
+  - beta, array of size iqmax = 2 * N + 1 to output the longitudinal
+  wavenumber beta_q, where beta_q -> beta[iq], q -> iq - N, and 0 <= iq < iqmax.
+  - h, array of size iqmax = 2 * N + 1 to output the transverse wavenumber
+  h_q, where h_q -> h[iq], q -> iq - N, and 0 <= iq < iqmax.
 
-  Implementation: In the paraxial h_q method, the condition 0 <= Re(beta_q) <=
-  Re(k) must be also satisfied in order to ensure Re(beta_q) >= 0 and Im(h_q) =
-  0 (notice this also implies in purely real h_q).
+  Implementation: It is computed using the dispersion relationship
+  h_q=sqrt(2)*k*sqrt(1-beta_q/k) (paraxial approximation). In the paraxial
+  h_q method, the condition 0 <= Re(beta_q) <= Re(k) must be also satisfied
+  in order to ensure Re(beta_q) >= 0 and Im(h_q) = 0 (notice this also
+  implies in purely real h_q).
 */
-FROZEN_WAVES_LIBRARY_API_IMPL_
 void fw_wavenumbers_paraxial_h(int N, double Q, double L, double k0,
                                double complex nref, double complex *k,
                                double complex *beta, double complex *h)

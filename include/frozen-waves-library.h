@@ -10,8 +10,8 @@
   Description: Include headers of all core functions of the
   include/frozen-waves-library/core folder.
 
-  Scientific notes: The harmonic convention adopted is exp(+j omega_0 t) where
-  omega_0 isthe angular frequency, which means for the refractive index n_ref,
+  Scientific notes: The harmonic convention adopted is exp(+i omega_0 t) where
+  omega_0 is the angular frequency, which means for the refractive index n_ref,
   Re(n_ref) >= 0 and Im(n_ref) = -kappa <= 0, where kappa >= 0, for the angular
   wavenumber k, Re(k) >= 0 and Im(k) <= 0, for the transverse wavenumber h,
   Re(h) >= 0 and Im(h) <= 0, and for thelongitudinal wavenumber beta, Re(beta)
@@ -23,6 +23,7 @@
 
 #include "frozen-waves-library/core/coefficients.h"
 #include "frozen-waves-library/core/miscellaneous.h"
+#include "frozen-waves-library/core/psi.h"
 #include "frozen-waves-library/core/wavenumbers.h"
 
 #endif /* FROZEN_WAVES_LIBRARY_H */
