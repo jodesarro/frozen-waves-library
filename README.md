@@ -536,9 +536,9 @@ All macros must be defined before the inclusion of the header of this library, i
 
 This library makes use of the following third-party libraries, codes, or routines, already incorporated:
 
-- Bessel Library: A C library with routines for computing Bessel functions. License and more information available at [<https://github.com/jodesarro/bessel-library>](https://github.com/jodesarro/bessel-library).
+- Bessel Library: A C library with routines for computing Bessel functions. More information available at [<https://github.com/jodesarro/bessel-library>](https://github.com/jodesarro/bessel-library).
 
-- Console Progress Bar: A C code for printing the progress of numeric iterations on the console. License and more information available at [<https://github.com/jodesarro/console-progress-bar>](https://github.com/jodesarro/console-progress-bar).
+- Console Progress Bar: A C code for printing the progress of numeric iterations on the console. More information available at [<https://github.com/jodesarro/console-progress-bar>](https://github.com/jodesarro/console-progress-bar).
 
 ## Authorship
 
@@ -556,6 +556,8 @@ Electromagnetics Group (AEG)</a> from University of São Paulo (USP).
 ## Licensing
 
 This project is protected under [MIT License](LICENSE).
+
+[Third parties](#third-parties) may have their own [license](LICENSE).
 
 ## References
 
