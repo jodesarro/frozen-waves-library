@@ -283,7 +283,7 @@ If you are unfamiliar with FWs, see the works listed in the
     wavenumber $h_q$, where $h_q$ ↦ `h[iq]`, $q$ ↦ `iq - N`, and
     `0 <= iq < iqmax`.
   - **Implementation:** It is computed using the dispersion relationship
-    $h_q=\sqrt(2)*k*\sqrt(1-\beta_q/k)$ (paraxial approximation).
+    $h_q=\sqrt{2}*k*\sqrt{1-\beta_q/k}$ (paraxial approximation).
     In the paraxial $h_q$ method, the condition
     $0 \leq \mathrm{Re}(\beta_q) \leq \mathrm{Re}(k)$ must be also satisfied
     in order to ensure $\mathrm{Re}(\beta_q) \geq 0$ and
