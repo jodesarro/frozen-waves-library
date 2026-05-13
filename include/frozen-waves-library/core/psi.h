@@ -24,9 +24,9 @@
 FROZEN_WAVES_LIBRARY_API_IMPL_
 /*
   Evaluates the scalar wave function psi(x,y,z) of a Frozen Wave (FW) 3D made by
-  P * S FWs, restricted to the case where all FWs share the same N, Q and L
+  P times S FWs, restricted to the case where all FWs share the same N, Q and L
   (i.e., for 1 <= p <= P and 1 <= s <= S, N_ps = N, Q_ps = Q, and L_ps = L).
-  See Refs. [7] and [8].
+  See Refs. [5], [6] and [7].
 
   Parameters:
   - P, number S of FWs in the transverse direction x.
@@ -41,11 +41,11 @@ FROZEN_WAVES_LIBRARY_API_IMPL_
   ip + 1, s -> is + 1, q -> iq - N, 0 <= ip < ipmax = P, 0 <= is < ismax = S,
   and 0 <= iq < iqmax = 2 * N + 1.
   - x0, array of size ipmax = P containing the x-coordinates of the origins of
-  the FWs, where x_0p -> x0[ip], p -> ip + 1, 0 <= ip < ipmax = P.
+  the FWs, where x_0,p -> x0[ip], p -> ip + 1, 0 <= ip < ipmax = P.
   - y0, array of size ismax = S containing the y-coordinates of the origins of
-  the FWs, where y_0s -> y0[is], s -> is + 1, 0 <= is < ismax = S.
+  the FWs, where y_0,s -> y0[is], s -> is + 1, 0 <= is < ismax = S.
   - z0, array of size ipmax * ismax = P * S containing the z-coordinates of the
-  origins of the FWs, where z_0ps -> z0[is + ismax*ip], p -> ip + 1, s -> is +
+  origins of the FWs, where z_0,ps -> z0[is + ismax*ip], p -> ip + 1, s -> is +
   1, 0 <= ip < ipmax = P, 0 <= is < ismax = S.
   - xmin, minimum value for the x coordinate, where x >= xmin.
   - xmax, maximum value for the x coordinate, where x <= xmax.
@@ -63,8 +63,8 @@ FROZEN_WAVES_LIBRARY_API_IMPL_
   (zpoints - 1).
 
   Implementation: The scalar wave function is computed through the formula
-  psi(x,y,z) = sum_{p=1}^P sum_{s=1}^S sum_{q=-N}^N A_q,ps cyl_j(0, h_q *
-  sqrt{(x-x_0p)^2 + (y-y_0s)^2}) exp(-i * beta_q * (z - z_0ps)).
+  psi(x,y,z) = sum_{p=1}^P sum_{s=1}^S sum_{q=-N}^N A_q,ps cyl_j(0, h_q
+  sqrt{(x-x_0,p)^2 + (y-y_0,s)^2}) exp(-i beta_q (z - z_0,ps)).
 
   Details: The computation is parallelized with OpenMP. If the macro
   FROZEN_WAVES_LIBRARY_PROGRESS_BAR is defined, a progress bar is displayed on
@@ -141,7 +141,7 @@ void fw3d_psi_restricted(int P, int S, int N, const double complex *beta,
 FROZEN_WAVES_LIBRARY_API_IMPL_
 /*
   Evaluates the scalar wave function psi(x,y,z) of a single Frozen Wave (FW).
-  See Refs. [1], [2] and [3].
+  See Refs. [1], [2], [3] and [4].
 
   Parameters:
   - N, parameter N of the FW.
@@ -166,9 +166,9 @@ FROZEN_WAVES_LIBRARY_API_IMPL_
   + iy * (ymax - ymin) / (ypoints - 1), z -> zmin + iz * (zmax - zmin) /
   (zpoints - 1).
 
-  Implementation: The psi(x,y,z) = sum_{q=-N}^N A_q cyl_j(0, h_q *
-  sqrt{x^2 + y^2}) exp(-i * beta_q *z) is computed through the function
-  fw3d_psi_restricted() with S = P = 1 and x0[0] = y0[0] = z0[0] = 0.
+  Implementation: The psi(x,y,z) = sum_{q=-N}^N A_q cyl_j(0, h_q sqrt{x^2 +
+  y^2}) exp(-i beta_q z) is computed through the function fw3d_psi_restricted()
+  with S = P = 1 and x0[0] = y0[0] = z0[0] = 0.
 
   Details: The computation is parallelized with OpenMP. If the macro
   FROZEN_WAVES_LIBRARY_PROGRESS_BAR is defined, a progress bar is displayed on

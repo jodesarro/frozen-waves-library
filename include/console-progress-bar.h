@@ -5,6 +5,7 @@
   Repository: <https://github.com/jodesarro/console-progress-bar>
   License: Refer to the LICENSE file in the Repository
   Language standard: C99
+  Last updated: 2026-05-13
 
   Description: Code for handling progress.
 */

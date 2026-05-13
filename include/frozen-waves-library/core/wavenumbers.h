@@ -175,9 +175,9 @@ FROZEN_WAVES_LIBRARY_API_IMPL_
   in order to ensure Re(beta_q) >= 0 and Im(h_q) = 0 (notice this also
   implies in purely real h_q).
 */
-void fw_wavenumbers_paraxial_h(int N, double Q, double L, double k0,
-                               double complex nref, double complex *k,
-                               double complex *beta, double complex *h)
+void fw_wavenumbers_paraxial(int N, double Q, double L, double k0,
+                             double complex nref, double complex *k,
+                             double complex *beta, double complex *h)
 #ifndef FROZEN_WAVES_LIBRARY_IMPORTS
 {
   /* Angular wavenumber */

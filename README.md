@@ -105,8 +105,8 @@ If you are unfamiliar with FWs, see the works listed in the
   </summary>
 
   - **Description:** Returns the maximum value possible for the integer
-  parameter $N$ of a Frozen Wave (FW). See Refs. [[1]](#ref1), [[2]](#ref2)
-  and [[3]](#ref3).
+  parameter $N$ of a Frozen Wave (FW). See Refs. [[1]](#ref[1]), [[2]](#ref[2])
+  and [[3]](#ref[3]).
   - **Parameters:**
     - `Q`, parameter $Q$ of the FW.
     - `L`, parameter $L$ of the FW.
@@ -122,7 +122,7 @@ If you are unfamiliar with FWs, see the works listed in the
 
   - **Description:** Returns the parameter $Q$ of the Frozen Wave (FW)
   technique for a given spot radius $\Delta_\rho$ for the FW beam. See
-  Refs. [[1]](#ref1) and [[2]](#ref2).
+  Refs. [[1]](#ref[1]) and [[2]](#ref[2]).
   - **Parameters:**
     - `k`, wavenumber $k$.
     - `spot_radius`, FW spot radius.
@@ -144,7 +144,7 @@ If you are unfamiliar with FWs, see the works listed in the
 
   - **Description:** Returns the parameter $Q$ of the Frozen Wave (FW)
   technique for a given spot radius $\Delta_\rho$ for the FW beam, considering
-  purely real transverse wavenumbers. See Ref. [[3]](#ref3).
+  purely real transverse wavenumbers. See Ref. [[3]](#ref[3]).
   - **Parameters:**
     - `k`, wavenumber $k$.
     - `spot_radius`, FW spot radius.
@@ -154,19 +154,19 @@ If you are unfamiliar with FWs, see the works listed in the
 
 <details>
   <summary>
-    <code><b>fw_Q_from_spot_radius_paraxial_h(k, spot_radius, asymptotic)</b></code>
+    <code><b>fw_Q_from_spot_radius_paraxial(k, spot_radius, asymptotic)</b></code>
   </summary>
 
   - **Description:** Returns the parameter $Q$ of the Frozen Wave (FW)
   technique for a given spot radius $\Delta_\rho$ for the FW beam, considering
-  the paraxial approximation. See Ref. [[3]](#ref3).
+  the paraxial approximation. See Ref. [[3]](#ref[3]).
   - **Parameters:**
     - `k`, wavenumber $k$.
     - `spot_radius`, FW spot radius.
     - `asymptotic`, if true, uses the asymptotic approximation.
   - **Implementation:** It is computed using the expression
     $Q = \mathrm{Re}(k) - 0.5\mathrm{Re}(k)c_0^2/(|k|\Delta_\rho)^2$ of the
-    paraxial $h_q$ method for wavenumbers calculation, where $c_0 = 2.4048$
+    paraxial method for wavenumbers calculation, where $c_0 = 2.4048$
     in general or $c_0 = 3\pi / 4$ for asymptotic expansion approximation of
     the spot radius.
 </details>
@@ -177,7 +177,7 @@ If you are unfamiliar with FWs, see the works listed in the
   </summary>
 
   - **Description:** Returns the Frozen Wave (FW) absorption-resistant
-  condition. See Ref. [[4]](#ref4).
+  condition. See Ref. [[4]](#ref[4]).
   - **Parameters:**
     - `N`, parameter $N$ of the FW.
     - `beta`, array of size `iqmax = 2 * N + 1`, containing the longitudinal
@@ -199,8 +199,8 @@ If you are unfamiliar with FWs, see the works listed in the
   </summary>
 
   - **Description:** Evaluates the wavenumbers $k$, $\beta_q$ and $h_q$ of a
-  Frozen Wave (FW) using the traditional method. See Refs. [[1]](#ref1) and
-  [[2]](#ref2).
+  Frozen Wave (FW) using the traditional method. See Refs. [[1]](#ref[1]) and
+  [[2]](#ref[2]).
   - **Parameters:**
     - `N`, parameter $N$ of the FW.
     - `Q`, parameter $Q$ of the FW.
@@ -237,7 +237,7 @@ If you are unfamiliar with FWs, see the works listed in the
 
   - **Description:** Evaluates the wavenumbers $k$, $\beta_q$ and $h_q$ of a
   Frozen Wave (FW) considering the purely real transverse wavenumber $h_q$ method.
-  See Ref. [[3]](#ref3).
+  See Ref. [[3]](#ref[3]).
   - **Parameters:**
     - `N`, parameter $N$ of the FW.
     - `Q`, parameter $Q$ of the FW.
@@ -262,12 +262,12 @@ If you are unfamiliar with FWs, see the works listed in the
 
 <details>
   <summary>
-    <code><b>fw_wavenumbers_paraxial_h(N, Q, L, k0, nref, &k, beta, h)</b></code>
+    <code><b>fw_wavenumbers_paraxial(N, Q, L, k0, nref, &k, beta, h)</b></code>
   </summary>
 
   - **Description:** Evaluates the wavenumbers $k$, $\beta_q$ and $h_q$ of a
   Frozen Wave (FW) using the paraxial approximation for the transverse
-  wavenumber $h_q$. See Ref. [[3]](#ref3).
+  wavenumber $h_q$. See Ref. [[3]](#ref[3]).
   - **Parameters:**
     - `N`, parameter $N$ of the FW.
     - `Q`, parameter $Q$ of the FW.
@@ -284,7 +284,7 @@ If you are unfamiliar with FWs, see the works listed in the
     `0 <= iq < iqmax`.
   - **Implementation:** It is computed using the dispersion relationship
     $h_q=\sqrt{2} k \sqrt{1-\beta_q/k}$ (paraxial approximation).
-    In the paraxial $h_q$ method, the condition
+    In the paraxial method, the condition
     $0 \leq \mathrm{Re}(\beta_q) \leq \mathrm{Re}(k)$ must be also satisfied
     in order to ensure $\mathrm{Re}(\beta_q) \geq 0$ and
     $\mathrm{Im}(h_q) = 0$ (notice this also implies in purely real $h_q$).
@@ -298,7 +298,8 @@ If you are unfamiliar with FWs, see the works listed in the
   </summary>
 
   - **Description:** Evaluates the $A_q$ coefficients of a single Frozen Wave
-  (FW), resistant or not to a possible absorption due to a medium with complex refractive index. See Refs. [[1]](#ref1), [[2]](#ref2) and [[3]](#ref3).
+  (FW), resistant or not to a possible absorption due to a medium with complex refractive index.
+  See Refs. [[1]](#ref[1]), [[2]](#ref[2]) and [[3]](#ref[3]).
   - **Parameters:**
     - `N`, parameter $N$ of the FW.
     - `L`, parameter $L$ of the FW.
@@ -327,7 +328,7 @@ If you are unfamiliar with FWs, see the works listed in the
   share the same $N$, $Q$ and $L$ (i.e., for $1 \leq p \leq P$ and
   $1 \leq s \leq S$, $N_{ps} = N$, $Q_{ps} = Q$, and $L_{ps} = L$), resistant
   or not to a possible absorption due to a medium with complex refractive
-  index. See Refs. [[7]](#ref7) and [[8]](#ref8).
+  index. See Refs. [[7]](#ref[7]) and [[8]](#ref[8]).
   - **Parameters:**
     - `P`, number $P$ of FWs in the transverse direction $x$.
     - `S`, number $S$ of FWs in the transverse direction $y$.
@@ -354,9 +355,9 @@ If you are unfamiliar with FWs, see the works listed in the
     and `0 <= iq < iqmax = 2 * N + 1`.
     - `absorption_resistant`, if false, the FW is not absorption-resistant.
   - **Implementation:**  The
-  $` A_{q,ps} = \int_0^L F(x=x_{0p}, y=y_{0s}, z) e^{-\bar{\beta_0}} e^{i 2 \pi q z / L} \mathrm{d}z `$,
-  where $x_{0p}$ ↦ `ix * (ipmax - 1) / (ixmax - 1)`,
-  $y_{0s}$ ↦ `iy * (ismax - 1) / (iymax - 1)`,
+  $` A_{q,ps} = \int_0^L F(x=x_{0,p}, y=y_{0,s}, z) e^{-\bar{\beta_0}} e^{i 2 \pi q z / L} \mathrm{d}z `$,
+  where $x_{0,p}$ ↦ `ix * (ipmax - 1) / (ixmax - 1)`,
+  $y_{0,s}$ ↦ `iy * (ismax - 1) / (iymax - 1)`,
   $\bar{\beta_0} = \mathrm{Im}(\beta_0)$ if `absorption_resistant = true` or
   $\bar{\beta_0} = 0$ if `absorption_resistant = false`,
   is computed by means of an approximation of the
@@ -370,14 +371,59 @@ If you are unfamiliar with FWs, see the works listed in the
 
 <details>
   <summary>
+    <code><b>fw3d_psi_restricted(P, S, N, beta, h, A, x0, y0, z0, xmin, xmax, xpoints, ymin, ymax, ypoints, zmin, zmax, zpoints, psi)</b></code>
+  </summary>
+
+  - **Description:** Evaluates the scalar wave function $\psi(x,y,z)$ of a Frozen Wave (FW) 3D made by
+  $P \times S$ FWs, restricted to the case where all FWs share the same $N$, $Q$ and $L$
+  (i.e., for $1 \leq p \leq P$ and $1 \leq s \leq S$, $N_{ps} = N$, $Q_{ps} = Q$, and $L_{ps} = L$).
+  See Refs. [[5]](#ref[5]), [[6]](#ref[6]) and [[7]](#ref[7]).
+  - **Parameters:**
+    - `P`, number $P$ of FWs in the transverse direction $x$.
+    - `S`, number $S$ of FWs in the transverse direction $y$.
+    - `N`, parameter $N$ of the FW.
+    - `beta`, array of size `iqmax = 2 * N + 1` containing the longitudinal
+    wavenumber $\beta_q$, where $\beta_q$ ↦ `beta[iq]`, $q$ ↦ `iq - N`, and
+    `0 <= iq < iqmax`.
+    - `h`, array of size `iqmax = 2 * N + 1` containing the transverse
+    wavenumber $h_q$, where $h_q$ ↦ `h[iq]`, $q$ ↦ `iq - N`, and
+    `0 <= iq < iqmax`.
+    - `A`, array of size `ipmax * ismax * iqmax = P * S * (2 * N + 1)` containing the
+    $A_{q,ps}$ coefficients, where $A_{q,ps}$ ↦ `A[iq + iqmax*is + iqmax*ismax*ip]`, $p$ ↦
+    `ip + 1`, $s$ ↦ `is + 1`, $q$ ↦ `iq - N`, `0 <= ip < ipmax = P`, `0 <= is < ismax = S`,
+    and `0 <= iq < iqmax = 2 * N + 1`.
+    - `x0`, array of size `ipmax = P` containing the $x$-coordinates of the origins of
+    the FWs, where $x_{0,p}$ ↦ `x0[ip]`, $p$ ↦ `ip + 1`, `0 <= ip < ipmax = P`.
+    - `y0`, array of size `ismax = S` containing the $y$-coordinates of the origins of
+    the FWs, where $y_{0,s}$ ↦ `y0[is]`, $s$ ↦ `is + 1`, `0 <= is < ismax = S`.
+    - `z0`, array of size `ipmax * ismax = P * S` containing the $z$-coordinates of the
+    origins of the FWs, where $z_{0,ps}$ ↦ `z0[is + ismax*ip]`, $p$ ↦ `ip + 1`, $s$ ↦ `is + 1`, `0 <= ip < ipmax = P`, `0 <= is < ismax = S`.
+    - `xmin`, minimum value for the $x$ coordinate, where $x \geq$ `xmin`.
+    - `xmax`, maximum value for the $x$ coordinate, where $x \leq$ `xmax`.
+    - `xpoints`, number of points in the $x$ direction, where `0 <= ix < xpoints`.
+    - `ymin`, minimum value for the $y$ coordinate, where $y \geq$ `ymin`.
+    - `ymax`, maximum value for the $y$ coordinate, where $y \leq$ `ymax`.
+    - `ypoints`, number of points in the $y$ direction, where `0 <= iy < ypoints`.
+    - `zmin`, minimum value for the $z$ coordinate, where $z \geq$ `zmin`.
+    - `zmax`, maximum value for the $z$ coordinate, where $z \leq$ `zmax`.
+    - `zpoints`, number of points in the $z$ direction, where `0 <= iz < zpoints`.
+    - `psi`, array of size `xpoints * ypoints * zpoints` to output the scalar wave
+    function $\psi(x,y,z)$, where $\psi(x,y,z)$ ↦ `psi[iz + zpoints*iy + zpoints*ypoints*ix]`, $x$ ↦ `xmin + ix * (xmax - xmin) / (xpoints - 1)`, $y$ ↦ `ymin + iy * (ymax - ymin) / (ypoints - 1)`, $z$ ↦ `zmin + iz * (zmax - zmin) / (zpoints - 1)`.
+  - **Implementation:** The scalar wave function is computed through the formula
+  $` \psi(x,y,z) = \sum_{p=1}^P \sum_{s=1}^S \sum_{q=-N}^N A_{q,ps} \ J_0\left[h_q\sqrt{(x-x_{0,p})^2 + (y-y_{0,s})^2}\right] \ \exp\left[-i \beta_q (z - z_{0,ps})\right] `$.
+  - **Details:** The computation is parallelized with OpenMP. If the macro `FROZEN_WAVES_LIBRARY_PROGRESS_BAR` is defined, a progress bar is displayed on
+  the console.
+</details>
+
+<details>
+  <summary>
     <code><b>fw_psi(N, beta, h, A, xmin, xmax, xpoints, ymin, ymax, ypoints, zmin, zmax, zpoints, psi)</b></code>
   </summary>
 
   - **Description:** Evaluates the scalar wave function $\psi(x,y,z)$ of a single Frozen Wave (FW).
-  See Refs. [[1]](#ref1), [[2]](#ref2) and [[3]](#ref3).
+  See Refs. [[1]](#ref[1]), [[2]](#ref[2]), [[3]](#ref[3]) and [[4]](#ref[4]).
   - **Parameters:**
     - `N`, parameter $N$ of the FW.
-    - `L`, parameter $L$ of the FW.
     - `beta`, array of size `iqmax = 2 * N + 1` containing the longitudinal
     wavenumber $\beta_q$, where $\beta_q$ ↦ `beta[iq]`, $q$ ↦ `iq - N`, and
     `0 <= iq < iqmax`.
@@ -399,53 +445,6 @@ If you are unfamiliar with FWs, see the works listed in the
     function $\psi(x,y,z)$, where $\psi(x,y,z)$ ↦ `psi[iz + zpoints*iy + zpoints*ypoints*ix]`, $x$ ↦ `xmin + ix * (xmax - xmin) / (xpoints - 1)`, $y$ ↦ `ymin + iy * (ymax - ymin) / (ypoints - 1)`, $z$ ↦ `zmin + iz * (zmax - zmin) / (zpoints - 1)`.
   - **Implementation:** The $` \psi(x,y,z) = \sum_{q=-N}^N A_q \ J_0(h_q\sqrt{x^2 + y^2}) \ \exp(-i \beta_q z) `$ is computed through the function `fw3d_psi_restricted()` with `S = P = 1` and
   `x0[0] = y0[0] = z0[0] = 0`.
-  - **Details:** The computation is parallelized with OpenMP. If the macro `FROZEN_WAVES_LIBRARY_PROGRESS_BAR` is defined, a progress bar is displayed on
-  the console.
-</details>
-
-<details>
-  <summary>
-    <code><b>fw3d_psi_restricted(P, S, N, beta, h, A, x0, y0, z0, xmin, xmax, xpoints, ymin, ymax, ypoints, zmin, zmax, zpoints, psi)</b></code>
-  </summary>
-
-  - **Description:** Evaluates the scalar wave function $\psi(x,y,z)$ of a Frozen Wave (FW) 3D made by
-  $P \times S$ FWs, restricted to the case where all FWs share the same $N$, $Q$ and $L$
-  (i.e., for $1 \leq p \leq P$ and $1 \leq s \leq S$, $N_{ps} = N$, $Q_{ps} = Q$, and $L_{ps} = L$).
-  See Refs. [[7]](#ref7) and [[8]](#ref8).
-  - **Parameters:**
-    - `P`, number $P$ of FWs in the transverse direction $x$.
-    - `S`, number $S$ of FWs in the transverse direction $y$.
-    - `N`, parameter $N$ of the FW.
-    - `L`, parameter $L$ of the FW.
-    - `beta`, array of size `iqmax = 2 * N + 1` containing the longitudinal
-    wavenumber $\beta_q$, where $\beta_q$ ↦ `beta[iq]`, $q$ ↦ `iq - N`, and
-    `0 <= iq < iqmax`.
-    - `h`, array of size `iqmax = 2 * N + 1` containing the transverse
-    wavenumber $h_q$, where $h_q$ ↦ `h[iq]`, $q$ ↦ `iq - N`, and
-    `0 <= iq < iqmax`.
-    - `A`, array of size `ipmax * ismax * iqmax = P * S * (2 * N + 1)` containing the
-    $A_{q,ps}$ coefficients, where $A_{q,ps}$ ↦ `A[iq + iqmax*is + iqmax*ismax*ip]`, $p$ ↦
-    `ip + 1`, $s$ ↦ `is + 1`, $q$ ↦ `iq - N`, `0 <= ip < ipmax = P`, `0 <= is < ismax = S`,
-    and `0 <= iq < iqmax = 2 * N + 1`.
-    - `x0`, array of size `ipmax = P` containing the $x$-coordinates of the origins of
-    the FWs, where $x_{0p}$ ↦ `x0[ip]`, $p$ ↦ `ip + 1`, `0 <= ip < ipmax = P`.
-    - `y0`, array of size `ismax = S` containing the $y$-coordinates of the origins of
-    the FWs, where $y_{0s}$ ↦ `y0[is]`, $s$ ↦ `is + 1`, `0 <= is < ismax = S`.
-    - `z0`, array of size `ipmax * ismax = P * S` containing the $z$-coordinates of the
-    origins of the FWs, where $z_{0ps}$ ↦ `z0[is + ismax*ip]`, $p$ ↦ `ip + 1`, $s$ ↦ `is + 1`, `0 <= ip < ipmax = P`, `0 <= is < ismax = S`.
-    - `xmin`, minimum value for the $x$ coordinate, where $x \geq$ `xmin`.
-    - `xmax`, maximum value for the $x$ coordinate, where $x \leq$ `xmax`.
-    - `xpoints`, number of points in the $x$ direction, where `0 <= ix < xpoints`.
-    - `ymin`, minimum value for the $y$ coordinate, where $y \geq$ `ymin`.
-    - `ymax`, maximum value for the $y$ coordinate, where $y \leq$ `ymax`.
-    - `ypoints`, number of points in the $y$ direction, where `0 <= iy < ypoints`.
-    - `zmin`, minimum value for the $z$ coordinate, where $z \geq$ `zmin`.
-    - `zmax`, maximum value for the $z$ coordinate, where $z \leq$ `zmax`.
-    - `zpoints`, number of points in the $z$ direction, where `0 <= iz < zpoints`.
-    - `psi`, array of size `xpoints * ypoints * zpoints` to output the scalar wave
-    function $\psi(x,y,z)$, where $\psi(x,y,z)$ ↦ `psi[iz + zpoints*iy + zpoints*ypoints*ix]`, $x$ ↦ `xmin + ix * (xmax - xmin) / (xpoints - 1)`, $y$ ↦ `ymin + iy * (ymax - ymin) / (ypoints - 1)`, $z$ ↦ `zmin + iz * (zmax - zmin) / (zpoints - 1)`.
-  - **Implementation:** The scalar wave function is computed through the formula
-  $` \psi(x,y,z) = \sum_{p=1}^P \sum_{s=1}^S \sum_{q=-N}^N A_{q,ps} \ J_0\left[h_q\sqrt{(x-x_{0p})^2 + (y-y_{0s})^2}\right] \ \exp\left[-i \beta_q (z - z_{0ps})\right] `$.
   - **Details:** The computation is parallelized with OpenMP. If the macro `FROZEN_WAVES_LIBRARY_PROGRESS_BAR` is defined, a progress bar is displayed on
   the console.
 </details>
@@ -561,48 +560,53 @@ This project is protected under [MIT License](LICENSE).
 
 ## References
 
-<a id="ref1"></a>
+<a id="ref[1]"></a>
 [1] M. Zamboni-Rached, "Stationary optical wave fields with arbitrary
 longitudinal shape by superposing equal frequency Bessel beams:
 Frozen Waves," Optics Express, vol. 12, no. 17, pp. 4001–4006, Aug. 2004, 
 [doi: 10.1364/OPEX.12.004001](https://doi.org/10.1364/OPEX.12.004001).
 
-<a id="ref2"></a>
+<a id="ref[2]"></a>
 [2] M. Zamboni-Rached, E. Recami, and H. E. Hernández-Figueroa, "Theory of
 'frozen waves': modeling the shape of stationary wave fields," Journal of the
 Optical Society of America A, vol. 22, no. 11, pp. 2465–2475, Nov. 2005,
 [doi: 10.1364/JOSAA.22.002465](https://doi.org/10.1364/JOSAA.22.002465).
 
-<a id="ref3"></a>
+<a id="ref[3]"></a>
 [3] M. Zamboni-Rached and M. Mojahedi, "Shaping finite-energy diffraction-
 and attenuation-resistant beams through Bessel-Gauss beam superposition,"
 Physical Review A, vol. 92, no. 4, p. 043839, Oct. 2015,
 [doi: 10.1103/PhysRevA.92.043839](https://doi.org/10.1103/PhysRevA.92.043839).
 
-<a id="ref4"></a>
+<a id="ref[4]"></a>
 [4] M. Zamboni-Rached, "Diffraction-Attenuation resistant beams in
 absorbing media," Optics Express, vol. 14, no. 5, pp. 1804–1809, Mar. 2006,
 [doi: 10.1364/OE.14.001804](https://doi.org/10.1364/OE.14.001804).
 
-<a id="ref5"></a>
+<a id="ref[5]"></a>
 [5] L. A. Ambrosio, "Millimeter-structured nondiffracting surface beams,"
 Journal of the Optical Society of America B, vol. 36, no. 3, pp. 638–645,
 Feb. 2019,
 [doi: 10.1364/JOSAB.36.000638](https://doi.org/10.1364/JOSAB.36.000638).
 
-<a id="ref6"></a>
+<a id="ref[6]"></a>
 [6] J. O. de Sarro and L. A. Ambrosio, "Surface beams resistant to
 diffraction and attenuation and structured at the millimeter scale,"
 Journal of the Optical Society of America B, vol. 38, no. 3, pp. 677–684,
 Mar. 2021, [doi: 10.1364/JOSAB.412756](https://doi.org/10.1364/JOSAB.412756).
 
-<a id="ref7"></a>
+<a id="ref[7]"></a>
 [7] A. H. Dorrah et al., "Light sheets for continuous-depth holography and
 three-dimensional volumetric displays," Nature Photonics, vol. 17, pp.
 427–434, Apr. 2023,
 [doi: 10.1038/s41566-023-01188-y](https://doi.org/10.1038/s41566-023-01188-y).
 
-<a id="ref8"></a>
-[8] Still needs an official reference, but FW 3D is a superposition of FWs
-with origins displaced in the plane transverse to the propagation
-direction.
+<a id="ref[8]"></a>
+[8] J. O. de Sarro, V. S. de Angelis, and L. A. Ambrosio, "Effects of Gaussian
+Apodization on the Propagation of Two-Dimensional Discrete Frozen Waves in
+Homogeneous Media," in 2023 SBMO/IEEE MTT-S International Microwave and
+Optoelectronics Conference (IMOC), IEEE, Jan. 2024, pp. 286–288,
+[doi: 10.1109/IMOC57131.2023.10379774](https://doi.org/10.1109/IMOC57131.2023.10379774).
+
+<a id="ref[9]"></a>
+[9]

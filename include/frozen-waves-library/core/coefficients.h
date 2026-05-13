@@ -28,7 +28,7 @@
 
 FROZEN_WAVES_LIBRARY_API_IMPL_
 /*
-  Evaluates the A_q,ps coefficients of a Frozen Wave (FW) 3D made by P * S
+  Evaluates the A_q,ps coefficients of a Frozen Wave (FW) 3D made by P times S
   FWs, restricted to the case where all FWs share the same N, Q and L (i.e.,
   for 1 <= p <= P and 1 <= s <= S, N_ps = N, Q_ps = Q, and L_ps = L),
   resistant or not to a possible absorption due to a medium with complex
@@ -58,7 +58,7 @@ FROZEN_WAVES_LIBRARY_API_IMPL_
   - absorption_resistant, if false, the FW is not absorption-resistant.
 
   Implementation: The A_q,ps = int_0^L F(x=x_0p, y=y_0s, z) exp(-betabar_0)
-  exp(i*2*pi*q*z/L) dz, where x_0p -> ix * (ipmax - 1) / (ixmax - 1), y_0s
+  exp(i 2 pi q z/L) dz, where x_0p -> ix * (ipmax - 1) / (ixmax - 1), y_0s
   -> iy * (ismax - 1) / (iymax - 1), betabar_0 = imag(beta_0) if
   absorption_resistant = true or betabar_0 = 0 if absorption_resistant =
   false, is computed by means of an approximation of the integral by the
@@ -101,15 +101,15 @@ void fw3d_A_restricted(int P, int S, int N, double L,
 
         /* Initial trapezoidal contribution (endpoints in z) */
         double complex aux =
-            0.5 *
-            (F[(izmax - 1) + izmax * iy + izmax * iymax * ix] *
-             exp(-betabar_0 * L) * +F[0 + izmax * iy + izmax * iymax * ix]);
+            0.5 * (F[(izmax - 1) + izmax * iy + izmax * iymax * ix] *
+                       exp(-betabar_0 * L) +
+                   F[0 + izmax * iy + izmax * iymax * ix]);
 
         /* Sum over intermediate z points */
         for (int iz = 1; iz < izmax - 1; iz++) {
           double z = L * (double)iz / ((double)(izmax - 1));
-          aux += F[iz + izmax * iy + izmax * iymax * ix] *
-                 cexp(I * c_2pi_L * q * z) * exp(-betabar_0 * z);
+          aux += F[iz + izmax * iy + izmax * iymax * ix] * exp(-betabar_0 * z) *
+                 cexp(I * c_2pi_L * q * z);
         }
 
         /* Normalize and store */
@@ -141,9 +141,9 @@ FROZEN_WAVES_LIBRARY_API_IMPL_
   - absorption_resistant, if false, the FW is not absorption-resistant.
 
   Implementation: The A_q = int_0^L F(z) exp(-betabar_0)
-  exp(i*2*pi*q*z/L) dz, where betabar_0 = imag(beta_0) if
+  exp(i 2 pi q z/L) dz, where betabar_0 = imag(beta_0) if
   absorption_resistant = true or betabar_0 = 0 if absorption_resistant =
-  false, is computed through the function fw3d_A_coefficient_restricted()
+  false, is computed through the function fw3d_A_restricted()
   with P = S = ixmax = iymax = 1.
 */
 void fw_A(int N, double L, const double complex *beta, const double *F,

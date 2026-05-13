@@ -275,12 +275,12 @@ FROZEN_WAVES_LIBRARY_API_IMPL_
   - asymptotic, if true, uses the asymptotic approximation.
 
   Implementation: It is computed using the expression Q = Re(k) -
-  0.5Re(k)c_0^2/(|k|Delta_rho)^2 of the paraxial h_q method for wavenumbers
+  0.5Re(k)c_0^2/(|k|Delta_rho)^2 of the paraxial method for wavenumbers
   calculation, where c_0 = 2.4048 in general or c_0 = 3pi / 4 for asymptotic
   expansion approximation of the spot radius.
 */
-double fw_Q_from_spot_radius_paraxial_h(double complex k, double spot_radius,
-                                        bool asymptotic)
+double fw_Q_from_spot_radius_paraxial(double complex k, double spot_radius,
+                                      bool asymptotic)
 #ifndef FROZEN_WAVES_LIBRARY_IMPORTS
 {
   /* Constants */
