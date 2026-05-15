@@ -449,6 +449,19 @@ If you are unfamiliar with FWs, see the works listed in the
   the console.
 </details>
 
+## Macros
+
+- `FROZEN_WAVES_LIBRARY_VERSION`: Call this macro to get the date of the last update.
+- `FROZEN_WAVES_LIBRARY_PROGRESS_BAR`: Define this macro to print a progress bar
+on the console while running the functions `fw3d_psi_restricted()` and `fw_psi()`.
+It must be defined before the inclusion of the header of this library, i.e.,
+you must write `#define FROZEN_WAVES_LIBRARY_PROGRESS_BAR` before
+`#include "frozen-waves-library.h"`.
+- `FROZEN_WAVES_LIBRARY_IMPORTS`: Define this macro always and only when using this
+library as a [compiled file](#compiling-the-library). It must be defined before
+the inclusion of the header of this library, i.e., you must write
+`#define FROZEN_WAVES_LIBRARY_IMPORTS` before `#include "frozen-waves-library.h"`.
+
 ## How to use
 
 This library is in a header-only style, i.e., there is nothing to build.
@@ -521,15 +534,6 @@ you must paste all the content of the
 [include](include/) folder inside the include folder of your project,
 and then write `#define FROZEN_WAVES_LIBRARY_IMPORTS`
 before the `#include "frozen-waves-library.h"`.
-
-## Macros
-
-There are some macros that may be used in this library.
-
-- `FROZEN_WAVES_LIBRARY_PROGRESS_BAR`: define this macro to print a progress bar on the console while running the function `fw3d_psi_restricted()`.
-- `FROZEN_WAVES_LIBRARY_IMPORTS`: always and only define this macro when using this library through a compiled file.
-
-All macros must be defined before the inclusion of the header of this library, i.e., you must write `#define FROZEN_WAVES_LIBRARY_PROGRESS_BAR` and/or `#define FROZEN_WAVES_LIBRARY_IMPORTS` before `#include "frozen-waves-library.h"`.
 
 ## Third Parties
 

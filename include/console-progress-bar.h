@@ -5,12 +5,13 @@
   Repository: <https://github.com/jodesarro/console-progress-bar>
   License: Refer to the LICENSE file in the Repository
   Language standard: C99
-  Last updated: 2026-05-13
 
   Description: Code for handling progress.
 */
 #ifndef CONSOLE_PROGRESS_BAR_H
 #define CONSOLE_PROGRESS_BAR_H
+
+#define CONSOLE_PROGRESS_BAR_VERSION "Last updated: 2026-05-15"
 
 #include <stdio.h>
 
